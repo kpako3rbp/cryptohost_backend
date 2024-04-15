@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id         String   @id @default(uuid())
+  login      String   @unique
+  email      String   @unique
+  password   String
+  role       String   @default("admin")
+  created_at DateTime
+}
+
+model User {
+  id         String   @id @default(uuid())
+  login      String   @unique
+  email      String   @unique
+  password   String
+  role       String   @default("user")
+  created_at DateTime
+}
+
+model PromoBanner {
+  id          String    @id @default(uuid())
+  created_at  DateTime
+  created_by  String
+  meta_title  String
+  title       String
+  description String
+  image       String
+  url         String
+  updated     Boolean   @default(false)
+  updated_at  DateTime?
+  updated_by  String    @default("")
+  deleted     Boolean   @default(false)
+  is_main     Boolean   @default(false)
+}
+
+model NewsCategory {
+  id         String     @id @default(uuid())
+  created_at DateTime
+  created_by String
+  name       String     @unique
+  slug       String     @unique
+  news_posts NewsPost[]
+  updated    Boolean    @default(false)
+  updated_at DateTime?
+  updated_by String     @default("")
+  deleted    Boolean    @default(false)
+}
+
+model NewsPost {
+  id           String       @id @default(uuid())
+  meta_title   String
+  title        String
+  category     NewsCategory @relation(fields: [category_id], references: [id])
+  category_id  String
+  created_at   DateTime
+  created_by   String
+  published_at DateTime
+  image        String
+  slug         String       @unique
+  body         String
+  updated      Boolean      @default(false)
+  updated_at   DateTime?
+  updated_by   String       @default("")
+  deleted      Boolean      @default(false)
+  views        Int          @default(0)
+}
+
+model CryptoActivity {
+  id           String    @id @default(uuid())
+  meta_title   String
+  title        String
+  created_at   DateTime
+  created_by   String
+  published_at DateTime
+  image        String
+  slug         String    @unique
+  body         String
+  updated      Boolean   @default(false)
+  updated_at   DateTime?
+  updated_by   String    @default("")
+  deleted      Boolean   @default(false)
+  views        Int       @default(0)
+}
