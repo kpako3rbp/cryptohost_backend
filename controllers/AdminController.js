@@ -2,7 +2,6 @@ import prisma from '../prisma/prisma-client.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-// TODO передалать эту сущность в администратора и добавить сущность для пользователя (потом)
 /**
  *
  @route POST /api/admin/login
@@ -30,6 +29,7 @@ export const login = async (req, res) => {
         id: admin.id,
         email: admin.email,
         login: admin.login,
+        role: admin.role,
         token: jwt.sign({ id: admin.id }, secret, { expiresIn: '30d' }),
       });
     } else {

@@ -19,8 +19,12 @@ const app = express();
 
 app.use(logger('dev'));
 
+const corsOptions = {
+  // origin: ['http://192.168.1.56:3000', 'http://localhost:3000'],
+  credentials: true // Разрешить передачу куки и заголовков авторизации
+};
 // вызываем корс как мидлвару
-app.use(cors());
+app.use(cors(corsOptions));
 
 // если запрос придет на uploads, то нужно взять функцию statiс из библиотеки express и проверить есть ли в этой папке то, что я передаю
 app.use('/uploads', express.static('uploads'));
