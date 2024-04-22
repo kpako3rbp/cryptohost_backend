@@ -1,0 +1,44 @@
+.header {
+  position: fixed !important;
+  // position: sticky;
+  top: 0;
+  background: var(--background-color);
+  z-index: 2;
+  width: 100%;
+
+  &Avatar {
+    background: var(--pink-color);
+  }
+
+  &LogoContainer {
+    min-width: 250px;
+    padding: 18px 26px;
+    border-right: 1px solid rgba(5, 5, 5, 0.06);
+    transition: var(--transition);
+
+    &Small {
+      min-width: 80px;
+    }
+  }
+
+  &ToolsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 26px 0 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    &LogoContainer {
+      &Small {
+        display: none;
+      }
+    }
+  }
+}
+
+
+
+

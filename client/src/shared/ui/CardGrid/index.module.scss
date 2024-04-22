@@ -1,0 +1,42 @@
+@import '../../../styles/animation.scss';
+
+
+.logo {
+  -webkit-user-select: none; /* Для WebKit браузеров (Chrome, Safari, Opera) */
+  -moz-user-select: none; /* Для Mozilla Firefox */
+  -ms-user-select: none; /* Для Internet Explorer */
+  user-select: none; /* Стандартное свойство */
+
+  &Icon {
+    display: flex;
+    height: 24px;
+    width: 24px;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &Name {
+    text-transform: uppercase;
+
+    display: block;
+    width: fit-content;
+    letter-spacing: 4px;
+    font-weight: bold;
+    line-height: 1rem;
+    font-size: 15px;
+    color: var(--black-color);
+    span {
+      animation: flash 2.2s infinite;
+      color: var(--purple-color);
+    }
+  }
+
+  &Descriptor {
+    color: var(--text-color-gray);
+    font-size: .7rem;
+    line-height: 1rem;
+    letter-spacing: 1px;
+  }
+}

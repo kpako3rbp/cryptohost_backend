@@ -1,0 +1,64 @@
+.entityCard {
+  &Time {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  &Inner {
+   // width: 800px;
+    width: 80%;
+  }
+
+  &Content {
+    //display: flex;
+
+  }
+
+
+
+  &Category {
+    border: 1px solid var(--red-color);
+  }
+
+  &Cover {
+    width: 110px;
+    min-width: 110px;
+    max-height: 80px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 80px;
+    // padding-bottom: 25.25%;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &Tools {
+    // width: 72px;
+  }
+}
+
+
+@media (max-width: 800px) {
+  .entityCard {
+    &Inner {
+      width: 100%;
+      // lex-wrap: wrap;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .entityCard {
+    &Inner {
+      flex-wrap: wrap;
+    }
+  }
+}
+

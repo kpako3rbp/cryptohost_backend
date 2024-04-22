@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2020 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1607px" height="1607px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 380.66 380.66"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:#2B2A29;stroke-width:9.87;stroke-miterlimit:22.9256}
+    .str0 {stroke:#2B2A29;stroke-width:9.87;stroke-miterlimit:22.9256}
+    .fil0 {fill:#2B2A29}
+    .fil1 {fill:#AC91F7}
+   ]]>
+  </style>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0 str0" x="4.93" y="50.52" width="22.79" height="279.61"/>
+  <rect class="fil0 str0" transform="matrix(2.7186E-14 1.02649 -1.02649 2.7186E-14 330.137 4.93464)" width="22.21" height="272.4"/>
+  <rect class="fil0 str0" x="27.73" y="27.73" width="22.79" height="22.79"/>
+  <rect class="fil0 str0" x="352.93" y="50.52" width="22.79" height="279.61"/>
+  <rect class="fil0 str0" transform="matrix(2.7186E-14 -1.02649 1.02649 2.7186E-14 50.5239 375.726)" width="22.21" height="272.4"/>
+  <rect class="fil0 str0" x="330.14" y="330.14" width="22.79" height="22.79"/>
+  <rect class="fil0 str0" x="27.73" y="330.14" width="22.79" height="22.79"/>
+  <rect class="fil0 str0" x="330.14" y="27.73" width="22.79" height="22.79"/>
+  <polygon class="fil1 str1" points="352.93,50.52 330.14,50.52 330.14,27.73 50.52,27.73 50.52,50.52 27.73,50.52 27.73,330.14 50.52,330.14 50.52,352.93 330.14,352.93 330.14,330.14 352.93,330.14 "/>
+  <g id="_2023359773056">
+   <rect class="fil0 str0" x="117" y="103.63" width="22.79" height="161.86"/>
+   <rect class="fil0 str0" transform="matrix(1.69757E-14 1.02649 -0.371037 1.57372E-14 240.865 80.8346)" width="22.21" height="272.4"/>
+   <rect class="fil0 str0" x="240.87" y="103.63" width="22.79" height="22.79"/>
+   <rect class="fil0 str0" transform="matrix(1.69757E-14 -1.02649 -0.371037 -1.57372E-14 240.865 288.283)" width="22.21" height="272.4"/>
+   <rect class="fil0 str0" x="240.87" y="242.69" width="22.79" height="22.79"/>
+  </g>
+ </g>
+</svg>

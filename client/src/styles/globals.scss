@@ -1,0 +1,168 @@
+@import '~bootstrap/scss/bootstrap';
+
+@font-face {
+  font-family: 'Monocraft';
+  src: url('/fonts/Monocraft.eot');
+  src: local('Monocraft'), local('Monocraft'),
+  url('/Monocraft.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/Monocraft.otf') format('woff'),
+  url('/fonts/Monocraft.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --max-width: 1200px;
+  --br-small: 5px;
+  --br: 10px;
+
+  --transition: all 0.2s, background 0s;
+
+  --mt-10: 10px;
+  --mt-15: 15px;
+  --mt-20: 20px;
+  --mt-25: 25px;
+  --mt-30: 30px;
+  --mt-35: 35px;
+  --mt-40: 40px;
+  --mt-45: 45px;
+  --mt-50: 50px;
+  --mt-55: 55px;
+
+  --fz-14: 14px;
+  --fz-15: 15px;
+  --fz-16: 16px;
+  --fz-18: 18px;
+  --fz-30: 30px;
+
+
+  // Depends of color theme
+  --background-color: #efe9db;
+  --overlay-color: rgba(108, 106, 102, 0.92);
+  --black-color: #414042;
+  --green-color: #85e17e;
+  --blue-color: #82c0d5;
+  --gray-color: #ddd8cc;
+  --gray-med-color: #c7c3b8;
+  --purple-color: #5f3bc2;
+  --white-color: #ffffff;
+  --text-color-gray: #7b7583;
+  --text-color-dark: #3b3347;
+  --text-color-medium: #7b7583;
+  --green-color2: #3c9336;
+  --pink-color: #ed0265;
+  --red-color: #ff9186;
+  --light-blue-color: #f7f8fa;
+
+  --box-shadow-xsm: 2px 2px 0px 0px var(--black-color);
+  --box-shadow-xsm-hover: 1px 1px 0px 0px var(--black-color);
+
+  --box-shadow-sm: 3px 3px 0px 0px var(--black-color);
+  --box-shadow-sm-hover: 1px 1px 0px 0px var(--black-color);
+  --border-black: 2px solid var(--black-color);
+
+  --border-gray: 2px solid var(--gray-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #1c1c1a;
+    --overlay-color: rgba(23, 21, 21, 0.92);
+    --black-color: rgba(210, 206, 198, 0.92);
+    --green-color: #2f7e2d;
+    --blue-color: #1f82a6;
+    --gray-color: #2a2729;
+    --purple-color: #7765bd;
+    --white-color: #3a3934;
+    --text-color-gray: #a09c9f;
+    --text-color-dark: #8c8c8c;
+    --text-color-medium: #cbc6ba;
+    --green-color2: #70c272;
+    --pink-color: #ed0265;
+    --red-color: #ec2e1a;
+    --light-blue-color: #f7f8fa;
+
+    --box-shadow-xsm: 2px 2px 0px 0px var(--black-color);
+    --box-shadow-xsm-hover: 1px 1px 0px 0px var(--black-color);
+
+    --box-shadow-sm: 3px 3px 0px 0px var(--black-color);
+    --box-shadow-sm-hover: 1px 1px 0px 0px var(--black-color);
+
+    --border-black: 2px solid var(--black-color);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+
+    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
+    --secondary-glow: linear-gradient(
+      to bottom right,
+      rgba(1, 65, 255, 0),
+      rgba(1, 65, 255, 0),
+      rgba(1, 65, 255, 0.3)
+    );
+
+    --tile-start-rgb: 2, 13, 46;
+    --tile-end-rgb: 2, 5, 19;
+    --tile-border: conic-gradient(
+      #ffffff80,
+      #ffffff40,
+      #ffffff30,
+      #ffffff20,
+      #ffffff10,
+      #ffffff10,
+      #ffffff80
+    );
+
+    --callout-rgb: 20, 20, 20;
+    --callout-border-rgb: 108, 108, 108;
+    --card-rgb: 100, 100, 100;
+    --card-border-rgb: 200, 200, 200;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Monocraft', sans-serif;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h2 {
+  font-size: 15px;
+  // margin-bottom: 0;
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

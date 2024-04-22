@@ -1,0 +1,15 @@
+.pageHeader {
+  padding: 5px 0 15px 0;
+
+  &Title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .pageHeader {
+    &Title {
+      font-size: 24px !important;
+    }
+  }
+}

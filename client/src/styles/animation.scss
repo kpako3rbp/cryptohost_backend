@@ -1,0 +1,60 @@
+@keyframes flash {
+  from,
+  50%,
+  to {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: .1;
+  }
+}
+
+@keyframes promo-decor-1 {
+  0% {
+    background-image: url('/ethereum-01-1.png');
+  }
+  50% {
+    background-image: url('/ethereum-01-2.png');
+  }
+  100% {
+    background-image: url('/ethereum-01-1.png');
+  }
+}
+
+@keyframes promo-decor-2 {
+  0% {
+    background-image: url('/bitcoin-01-1.png');
+  }
+  50% {
+    background-image: url('/bitcoin-01-2.png');
+  }
+  100% {
+    background-image: url('/bitcoin-01-1.png');
+  }
+}
+
+@keyframes promo-decor-3 {
+  0% {
+    background-image: url('/x-01-1.png');
+  }
+  50% {
+    background-image: url('/x-01-2.png');
+  }
+  100% {
+    background-image: url('/x-01-1.png');
+  }
+}
+
+@keyframes promo-decor-4 {
+  0% {
+    background-image: url('/telegram-01-1.png');
+  }
+  50% {
+    background-image: url('/telegram-01-2.png');
+  }
+  100% {
+    background-image: url('/telegram-01-1.png');
+  }
+}

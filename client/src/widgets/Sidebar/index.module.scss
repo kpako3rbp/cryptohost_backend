@@ -1,0 +1,23 @@
+.sidebar {
+  z-index: 2;
+  // position: fixed !important;
+  position: fixed !important;
+  top: 64px;
+  // top: 64px;
+  // position: sticky;
+  &Category {
+    padding: 18px 26px;
+    font-size: 15px;
+
+    &Hide {
+      display: none;
+    }
+  }
+}
+
+
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed !important;
+  }
+}
