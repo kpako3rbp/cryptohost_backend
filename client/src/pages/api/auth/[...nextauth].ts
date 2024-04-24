@@ -37,6 +37,7 @@ export const authOptions: NextAuthOptions = {
 
           if (!user) {
             //throw new Error('Неверный логин или пароль');
+            console.error('Неверный логин или пароль');
             return null;
           }
 

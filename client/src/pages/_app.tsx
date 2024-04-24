@@ -1,12 +1,13 @@
 import '../styles/reset.scss';
 import '../styles/globals.scss';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 // import { ConfigProvider } from 'antd';
 import { ConfigProvider } from 'antd';
 import type { AppProps } from 'next/app';
 
 import themeConfig from '../styles/themeConfig';
+import locale from 'antd/locale/ru_RU'
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { SessionProvider } from 'next-auth/react';
@@ -20,7 +21,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
 
   return (
     <Provider store={store}>
-      <ConfigProvider theme={themeConfig}>
+      <ConfigProvider theme={themeConfig} locale={locale}>
         <SessionProvider session={session}>
           <Layout hasSidebar={!isLoginPage}>
             <Head>

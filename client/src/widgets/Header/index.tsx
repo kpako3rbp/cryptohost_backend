@@ -4,7 +4,7 @@ import {
   Avatar,
   Button,
   Flex,
-  Layout,
+  Layout, message,
   Popover,
   Space,
   Spin,
@@ -21,7 +21,7 @@ import {
 const { Header: AntdHeader } = Layout;
 
 import styles from './index.module.scss';
-import ButtonRounded from '../../shared/ui/ButtonRounded';
+import CustomButton from '../../shared/ui/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
 // import { logout, selectUser } from '../../redux/slices/auth';
 import { useRouter } from 'next/router';
@@ -52,7 +52,8 @@ const Header = (props: Props) => {
 
       router.push(data.url);
     } catch (err) {
-      console.error(err);
+      message.error('Произошла ошибка при выходе из кабинета');
+      console.error('Произошла ошибка при выходе из кабинета', err);
     } finally {
       setLoading(false);
     }
@@ -116,7 +117,7 @@ const Header = (props: Props) => {
                 </Avatar>
                 <div>{session.user.login}</div>
               </Flex>
-              <ButtonRounded
+              <CustomButton
                 onClick={onLogoutClick}
                 popover="Выйти"
                 danger

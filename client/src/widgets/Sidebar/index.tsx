@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   ApartmentOutlined,
-  GiftOutlined,
+  GiftOutlined, PicLeftOutlined,
   PicRightOutlined,
   PictureOutlined,
 } from '@ant-design/icons';
@@ -27,9 +27,9 @@ const Sidebar = (props: Props) => {
 
   const items = [
     {
-      key: '/',
+      key: '/news',
       icon: <PicRightOutlined />,
-      label: <Link href={'/'}>Новости</Link>,
+      label: <Link href={'/news'}>Новости</Link>,
     },
     {
       key: '/categories',
@@ -38,7 +38,7 @@ const Sidebar = (props: Props) => {
     },
     {
       key: '/promo-banners',
-      icon: <PictureOutlined />,
+      icon: <PicLeftOutlined />,
       label: <Link href={'/promo-banners'}>Промо-баннеры</Link>,
     },
     {
@@ -109,7 +109,7 @@ const Sidebar = (props: Props) => {
       <Menu
         // theme="dark"
         mode="inline"
-        defaultSelectedKeys={[router.pathname]}
+        defaultSelectedKeys={[`/${router.pathname.split('/')[1]}`]}
         style={{
           borderRight: 'none',
         }}

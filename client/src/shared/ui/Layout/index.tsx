@@ -6,6 +6,7 @@ import { Layout as AntdLayout } from 'antd';
 import Header from '../../../widgets/Header';
 import Sidebar from '../../../widgets/Sidebar';
 import cl from 'classnames';
+import {useRouter} from "next/router";
 
 const { Content } = AntdLayout;
 
@@ -34,8 +35,8 @@ const Layout = (props: Props) => {
   return (
     <AntdLayout
       style={{
-        minHeight: '100dvh',
-        maxHeight: '100dvh',
+        minHeight: '100vh',
+        maxHeight: '100vh',
         overflow: 'hidden',
         position: 'relative',
       }}

@@ -42,11 +42,11 @@ export const promoBannerValidation = {
   create: [
     body('meta_title')
       .optional()
-      .isLength({ min: 3, max: 40 })
-      .withMessage('Мета-заголовок должен быть быть от 3 до 40 символов'),
+      .isLength({ min: 3, max: 100 })
+      .withMessage('Мета-заголовок должен быть быть от 3 до 100 символов'),
     body('title')
-      .isLength({ min: 3, max: 40 })
-      .withMessage('Заголовок должен быть быть от 3 до 40 символов'),
+      .isLength({ min: 3, max: 100 })
+      .withMessage('Заголовок должен быть быть от 3 до 100 символов'),
     body('description')
       .isLength({ min: 3, max: 100 })
       .withMessage('Описание должно содержать от 3 до 100 символов'),
@@ -64,12 +64,12 @@ export const promoBannerValidation = {
   update: [
     body('meta_title')
       .optional()
-      .isLength({ min: 3, max: 40 })
-      .withMessage('Мета-заголовок должен быть быть от 3 до 40 символов'),
+      .isLength({ min: 3, max: 100 })
+      .withMessage('Мета-заголовок должен быть быть от 3 до 100 символов'),
     body('title')
       .optional()
-      .isLength({ min: 3, max: 40 })
-      .withMessage('Заголовок должен быть быть от 3 до 40 символов'),
+      .isLength({ min: 3, max: 100 })
+      .withMessage('Заголовок должен быть быть от 3 до 100 символов'),
     body('description')
       .optional()
       .isLength({ min: 3, max: 100 })
@@ -99,12 +99,12 @@ export const newsCategoryValidation = [
 
 export const newsPostValidation = {
   create: [
-    body('metaTitle', 'Мета-заголовок должен быть от 3 до 60 символов')
+    body('metaTitle', 'Мета-заголовок должен быть от 3 до 100 символов')
       .optional()
-      .isLength({ min: 3, max: 60 })
+      .isLength({ min: 3, max: 100 })
       .isString(),
-    body('title', 'Заголовок новости должен быть от 3 до 60 символов')
-      .isLength({ min: 3, max: 60 })
+    body('title', 'Заголовок новости должен быть от 3 до 100 символов')
+      .isLength({ min: 3, max: 100 })
       .isString(),
     body('categoryId', 'Укажите ID категории').isString(),
     body('publishedAt', 'Неверный формат даты публикации')
@@ -120,13 +120,13 @@ export const newsPostValidation = {
       .isString(),
   ],
   update: [
-    body('metaTitle', 'Мета-заголовок должен быть от 3 до 60 символов')
+    body('metaTitle', 'Мета-заголовок должен быть от 3 до 100 символов')
       .optional()
-      .isLength({ min: 3, max: 60 })
+      .isLength({ min: 3, max: 100 })
       .isString(),
-    body('title', 'Заголовок новости должен быть от 3 до 60 символов')
+    body('title', 'Заголовок новости должен быть от 3 до 100 символов')
       .optional()
-      .isLength({ min: 3, max: 60 })
+      .isLength({ min: 3, max: 100 })
       .isString(),
     body('categoryId', 'Укажите ID категории').optional().isString(),
     body('publishedAt', 'Неверный формат даты публикации')
@@ -147,12 +147,12 @@ export const newsPostValidation = {
 
 export const cryptoActivitiesValidation = {
   create: [
-    body('metaTitle', 'Мета-заголовок должен быть от 3 до 60 символов')
+    body('metaTitle', 'Мета-заголовок должен быть от 3 до 100 символов')
       .optional()
-      .isLength({ min: 3, max: 60 })
+      .isLength({ min: 3, max: 100 })
       .isString(),
-    body('title', 'Заголовок криптоактивности должен быть от 3 до 60 символов')
-      .isLength({ min: 3, max: 60 })
+    body('title', 'Заголовок криптоактивности должен быть от 3 до 100 символов')
+      .isLength({ min: 3, max: 100 })
       .isString(),
     body('publishedAt', 'Неверный формат даты публикации')
       .optional()
@@ -167,13 +167,13 @@ export const cryptoActivitiesValidation = {
       .isString(),
   ],
   update: [
-    body('metaTitle', 'Мета-заголовок должен быть от 3 до 60 символов')
+    body('metaTitle', 'Мета-заголовок должен быть от 3 до 100 символов')
       .optional()
-      .isLength({ min: 3, max: 60 })
+      .isLength({ min: 3, max: 100 })
       .isString(),
-    body('title', 'Заголовок криптоактивности должен быть от 3 до 60 символов')
+    body('title', 'Заголовок криптоактивности должен быть от 3 до 100 символов')
       .optional()
-      .isLength({ min: 3, max: 60 })
+      .isLength({ min: 3, max: 100 })
       .isString(),
     body('publishedAt', 'Неверный формат даты публикации')
       .optional()

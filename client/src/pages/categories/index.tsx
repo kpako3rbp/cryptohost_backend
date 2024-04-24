@@ -2,7 +2,7 @@ import { theme } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import Layout from '../../shared/ui/Layout';
 import Breadcrumbs from '../../features/Breadcrumb';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const Categories = () => {
   const {

@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchPosts } from '../../pages/api/posts'; // Замените 'api/postsAPI' на путь к вашему модулю для сетевых запросов
+import { fetchPosts } from '../../pages/api/posts/getAll'; // Замените 'api/postsAPI' на путь к вашему модулю для сетевых запросов
 
 const fetchPostsAsync = createAsyncThunk('posts/fetchPosts', async () => {
-  const response = await fetchPosts(); // Предполагаем, что у вас есть функция fetchPosts для получения постов
-  return response.data;
+  // const response = await fetchPosts(); // Предполагаем, что у вас есть функция fetchPosts для получения постов
+  // return response.data;
 });
 
 const postsSlice = createSlice({

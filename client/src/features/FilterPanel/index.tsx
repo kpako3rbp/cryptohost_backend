@@ -46,12 +46,13 @@ const FilterPanel = (props: Props) => {
               <Row justify="space-between" align="middle" gutter={[16, 16]}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <Space.Compact style={{ minWidth: '100%' }}>
-                    <Input placeholder="Поиск по заголовку" />
-                    <Button icon={<SearchOutlined />}></Button>
+                    <Input size="large" placeholder="Поиск по заголовку" />
+                    <Button size="large" icon={<SearchOutlined />}></Button>
                   </Space.Compact>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <Select
+                    size="large"
                     style={{ minWidth: '100%' }}
                     defaultValue="createdAt"
                     allowClear
@@ -66,6 +67,7 @@ const FilterPanel = (props: Props) => {
               </Row>
               <Divider />
               <Select
+                size="large"
                 style={{ minWidth: '100%' }}
                 mode="multiple"
                 placeholder="Категории"

@@ -3,7 +3,6 @@ const themeConfig = {
     // Seed Token
     colorPrimary: '#5f3bc2',
     colorText: '#414042',
-    borderRadius: 2,
     fontSize: 14,
     colorBorder: '#cccfea',
 
@@ -13,6 +12,7 @@ const themeConfig = {
     // Alias Token
     colorError: '#ed0265',
 		fontFamily: '\'Monocraft\', sans-serif',
+    borderRadius: 9,
     borderRadiusLG: 15,
     borderRadiusXS: 8,
     // borderRadiusOuter: 10,

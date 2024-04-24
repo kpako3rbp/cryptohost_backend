@@ -1,3 +1,3 @@
 export { default } from 'next-auth/middleware';
 
-export const config = { matcher: ['/', '/categories'] };
+export const config = { matcher: ['/', '/add-news', '/categories'] };

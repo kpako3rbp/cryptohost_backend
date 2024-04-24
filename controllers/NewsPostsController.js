@@ -20,8 +20,11 @@ export const getAll = async (req, res) => {
     const {
       page = 1,
       pageSize = 10,
-      categoryIds = '',
-      excludeIds = '',
+      categoryIds = '[]',
+      excludeIds = '[]',
+      searchQuery = '', // 1. Добавление параметра поиска по заголовку
+      sortField = 'created_at', // Поле сортировки по умолчанию
+      sortOrder = 'desc', // Направление сортировки по умолчанию
     } = req.query;
 
     const pageSizeInt = parseInt(pageSize, 10);
@@ -32,18 +35,26 @@ export const getAll = async (req, res) => {
     };
 
     // Добавляем фильтрацию по категориям, если categoryIds указаны
-    if (categoryIds) {
+    if (JSON.parse(categoryIds).length > 0) {
       where.category_id = {
         in: JSON.parse(categoryIds),
       };
     }
 
     // Добавляем исключение постов, если excludeIds указаны
-    if (excludeIds) {
+    if (JSON.parse(excludeIds).length > 0) {
       where.NOT = {
         id: {
           in: JSON.parse(excludeIds),
         },
+      };
+    }
+
+    // Добавляем поиск по заголовку
+    if (searchQuery) {
+      where.title = {
+        contains: searchQuery,
+        // mode: 'insensitive', // Регистронезависимый поиск
       };
     }
 
@@ -56,8 +67,11 @@ export const getAll = async (req, res) => {
       skip,
       take: pageSizeInt,
       orderBy: {
-        published_at: 'desc',
+        [sortField]: sortOrder, // 2. Добавление сортировки по выбранному полю и направлению
       },
+/*      include: {
+        category: true,
+      },*/
       // Отдаем только те поля, который нужны
       select: {
         id: true,
@@ -65,10 +79,12 @@ export const getAll = async (req, res) => {
         title: true,
         category_id: true,
         published_at: true,
+        updated_at: true,
         image: true,
         slug: true,
         body: true,
         views: true,
+        category: true,
       },
     });
 
