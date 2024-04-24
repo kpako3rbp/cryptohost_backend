@@ -1,23 +1,38 @@
 import '../styles/reset.scss';
 import '../styles/globals.scss';
 
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 // import { ConfigProvider } from 'antd';
 import { ConfigProvider } from 'antd';
 import type { AppProps } from 'next/app';
 
 import themeConfig from '../styles/themeConfig';
-import locale from 'antd/locale/ru_RU'
+import locale from 'antd/locale/ru_RU';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { SessionProvider } from 'next-auth/react';
 import Layout from '../shared/ui/Layout';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Preloader from '../shared/ui/Preloader';
 
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
   const router = useRouter();
   const isLoginPage = router.pathname === '/login';
+
+  const [loading, setLoading] = useState(false);
+
+  router.events?.on('routeChangeStart', () => {
+    setLoading(true);
+  });
+
+  router.events?.on('routeChangeComplete', () => {
+    setLoading(false);
+  });
+
+  router.events?.on('routeChangeError', () => {
+    setLoading(false);
+  });
 
   return (
     <Provider store={store}>
@@ -32,6 +47,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
               />
             </Head>
             <Component {...pageProps} />
+            {loading && <Preloader isGlobal={true} />}
           </Layout>
         </SessionProvider>
       </ConfigProvider>

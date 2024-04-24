@@ -49,7 +49,6 @@ export const getAll = async (req, res) => {
         },
       };
     }
-
     // Добавляем поиск по заголовку
     if (searchQuery) {
       where.title = {

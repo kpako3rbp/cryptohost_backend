@@ -24,6 +24,8 @@ const AddPost = (props: Props) => {
   const { categories, token } = props;
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
+
   const paths = [
     {
       path: '/',
@@ -41,10 +43,14 @@ const AddPost = (props: Props) => {
   // const [error, setError] = useState('');
 
   const handleAddNewsPost = async (data: NewsPost) => {
+    setLoading(true);
     try {
       await addPost(token, data, () => router.push('/news'));
+      // setLoading(false);
     } catch (err) {
       console.error('Не удалось добавить пост', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,6 +68,7 @@ const AddPost = (props: Props) => {
         btnText="Добавить новость"
         categories={categories}
         token={token}
+        loading={loading}
       />
     </>
   );

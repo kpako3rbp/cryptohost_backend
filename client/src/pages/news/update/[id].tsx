@@ -27,6 +27,8 @@ const UpdatePost = (props: Props) => {
   const { post, categories, token, id } = props;
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
+
   const paths = [
     {
       path: '/',
@@ -42,10 +44,13 @@ const UpdatePost = (props: Props) => {
   ];
 
   const handleUpdateNewsPost = async (data: NewsPost) => {
+    setLoading(true);
     try {
       await updatePost(token, id, data, () => router.push('/news'));
     } catch (err) {
       console.error('Не удалось обновить новость', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,6 +69,7 @@ const UpdatePost = (props: Props) => {
         categories={categories}
         token={token}
         post={post}
+        loading={loading}
       />
     </>
   );

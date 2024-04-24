@@ -38,16 +38,16 @@ type Props = {
   post?: NewsPost;
   categories?: NewsCategory[];
   token: string;
+  loading: boolean;
 };
 
 const NewsPostForm = (props: Props) => {
-  const { onFinish, title, btnText, post, categories, token } = props;
+  const { onFinish, title, btnText, post, categories, token, loading } = props;
   const {
     token: { borderRadiusLG, colorBorder, colorTextDescription },
   } = theme.useToken();
 
   const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [text, setText] = useState('');
   const inputRef = useRef<InputRef>(null);
@@ -281,7 +281,7 @@ const NewsPostForm = (props: Props) => {
           </Form.Item>
         </div>
 
-        <Button type="primary" size="large" htmlType="submit">
+        <Button loading={loading} type="primary" size="large" htmlType="submit">
           {btnText}
         </Button>
       </Form>

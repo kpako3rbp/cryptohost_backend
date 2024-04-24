@@ -1,8 +1,10 @@
 import React from 'react';
-
-import styles from './index.module.scss';
 import { Card as AntdCard, Tag, theme, Flex } from 'antd';
-import {DeleteOutlined, EditOutlined, ExportOutlined, LinkOutlined} from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExportOutlined,
+} from '@ant-design/icons';
 import Link from 'next/link';
 import CustomButton from '../../shared/ui/CustomButton';
 
@@ -10,6 +12,9 @@ import { NewsCategory, NewsPost } from '@prisma/client';
 import { baseUrl, extUrl } from '../../../routes';
 import { formatDateTime } from '../../shared/lib/format-date';
 import { useRouter } from 'next/router';
+
+import styles from './index.module.scss';
+import EntityCardSkeleton from "./Skeleton";
 
 type Props = {
   entityName: string;
@@ -23,6 +28,7 @@ type Props = {
   category?: NewsCategory;
   hasTools?: boolean;
   handleRemove?: () => void;
+  isLoading: boolean;
 };
 
 const EntityCard = (props: Props) => {
@@ -38,11 +44,20 @@ const EntityCard = (props: Props) => {
     category,
     hasTools = true,
     handleRemove,
+    isLoading,
   } = props;
   const {
     token: { colorTextTertiary, colorTextQuaternary, borderRadiusLG },
   } = theme.useToken();
   const router = useRouter();
+
+  if (isLoading) {
+    const skeletonCount = 10;
+    const skeletons = Array.from({ length: skeletonCount }, (_, index) => (
+      <EntityCardSkeleton key={index} />
+    ));
+    return skeletons;
+  }
 
   //console.log("${extUrl}/${router.pathname}/${slug}", `${extUrl}${router.pathname}/${slug}`)
   return (
@@ -94,7 +109,10 @@ const EntityCard = (props: Props) => {
                   icon={<EditOutlined />}
                 />
               </Link>
-              <Link href={`${extUrl}${router.pathname}/${slug}`} target="_blank">
+              <Link
+                href={`${extUrl}${router.pathname}/${slug}`}
+                target="_blank"
+              >
                 <CustomButton
                   popover={`Открыть на сайте: ${`${extUrl}${router.pathname}/${slug}`}`}
                   icon={<ExportOutlined />}

@@ -19,6 +19,7 @@ import removePost from '../../app/servises/posts/remove';
 import FilterPosts from '../../features/FilterPosts';
 import { SearchNewsParams } from '../../app/servises/posts/types';
 import fetchCategories from '../../app/servises/categories/get-all';
+import PostFilterProvider from "../../app/providers/PostFiltersProvider";
 
 type NewsPostWithCategory = NewsPost & {
   category: NewsCategory;
@@ -37,6 +38,7 @@ const Home = (props: Props) => {
   const [currentTotal, setCurrentTotal] = useState(total);
 
   const [currentPage, resetCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const paths = [
     {
@@ -49,6 +51,7 @@ const Home = (props: Props) => {
   ];
 
   const handlePagination = async (page: number, pageSize: number) => {
+    setIsLoading(true);
     try {
       const data = await fetchPosts(token, { page, pageSize });
 
@@ -56,40 +59,51 @@ const Home = (props: Props) => {
 
       setCurrentPosts(data.posts);
       setCurrentTotal(data.total);
+      // setIsLoading(false);
     } catch (err) {
       message.error('Ошибка при пагинации постов');
       console.error('Ошибка при пагинации постов', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-
   const handleFilterPosts = async (params: SearchNewsParams) => {
+    setIsLoading(true);
     try {
       const data = await fetchPosts(token, params);
 
       setCurrentPosts(data.posts);
       setCurrentTotal(data.total);
+      // setIsLoading(false);
     } catch (err) {
       message.error('Ошибка при фильтрации постов');
       console.error('Ошибка при фильтрации постов', err);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleRemovePost = async (id: string) => {
+    setIsLoading(true);
     try {
       await removePost(token, id);
       const data = await fetchPosts(token);
 
       setCurrentPosts(data.posts);
       setCurrentTotal(data.total);
+      // setIsLoading(false);
     } catch (err) {
       message.error('Ошибка при удалении поста');
       console.error('Ошибка при удалении поста', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <>
+    <PostFilterProvider>
       <Head>
         <title>Cryptohost: admin</title>
       </Head>
@@ -100,7 +114,11 @@ const Home = (props: Props) => {
         buttonLink={'news/add'}
       />
       <CardGrid>
-        <FilterPosts categories={categories} callback={handleFilterPosts} resetPagination={() => resetCurrentPage(1)} />
+        <FilterPosts
+          categories={categories}
+          callback={handleFilterPosts}
+          resetPagination={() => resetCurrentPage(1)}
+        />
         {currentPosts.length > 0 ? (
           <>
             {currentPosts.map((post) => (
@@ -116,6 +134,7 @@ const Home = (props: Props) => {
                 updatedAt={post.updated_at}
                 category={post.category}
                 handleRemove={() => handleRemovePost(post.id)}
+                isLoading={isLoading}
               />
             ))}
             <Pagination
@@ -135,26 +154,9 @@ const Home = (props: Props) => {
           </Card>
         )}
       </CardGrid>
-    </>
+    </PostFilterProvider>
   );
 };
-
-/*export const getServerSideProps = async (context: any) => {
-  const session = await getSession(context);
-
-  if (!session || !session.user) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-};*/
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
@@ -165,12 +167,14 @@ export const getServerSideProps = async (
     authOptions
   )) as Session;
 
-  const { posts, total } = await fetchPosts(session.user.token);
+  const postData = await fetchPosts(session.user.token);
   const categories = await fetchCategories(session.user.token);
+
+  console.log('posts', postData);
   return {
     props: {
-      posts,
-      total,
+      posts: postData?.posts || [],
+      total: postData?.total || 0,
       categories,
       token: session.user.token,
     },

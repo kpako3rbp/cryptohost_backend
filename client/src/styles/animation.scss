@@ -11,50 +11,50 @@
   }
 }
 
-@keyframes promo-decor-1 {
-  0% {
-    background-image: url('/ethereum-01-1.png');
+@keyframes dots-i2eob1md {
+  12.5% {
+    box-shadow: 21.3px -21.3px 0 0px, 42.6px -21.3px 0 0px, 63.8px -21.3px 0 5.6px,
+    21.3px 0     0 5.6px, 42.6px 0     0 0px, 63.8px 0     0 5.6px,
+    21.3px 21.3px  0 0px, 42.6px 21.3px  0 0px, 63.8px 21.3px  0 0px;
   }
+
+  25% {
+    box-shadow: 21.3px -21.3px 0 5.6px, 42.6px -21.3px 0 0px, 63.8px -21.3px 0 5.6px,
+    21.3px 0     0 0px, 42.6px 0     0 0px, 63.8px 0     0 0px,
+    21.3px 21.3px  0 0px, 42.6px 21.3px  0 5.6px, 63.8px 21.3px  0 0px;
+  }
+
   50% {
-    background-image: url('/ethereum-01-2.png');
+    box-shadow: 21.3px -21.3px 0 5.6px, 42.6px -21.3px 0 5.6px, 63.8px -21.3px 0 0px,
+    21.3px 0     0 0px, 42.6px 0     0 0px, 63.8px 0     0 0px,
+    21.3px 21.3px  0 0px, 42.6px 21.3px  0 0px, 63.8px 21.3px  0 5.6px;
   }
-  100% {
-    background-image: url('/ethereum-01-1.png');
+
+  62.5% {
+    box-shadow: 21.3px -21.3px 0 0px, 42.6px -21.3px 0 0px, 63.8px -21.3px 0 0px,
+    21.3px 0     0 5.6px, 42.6px 0     0 0px, 63.8px 0     0 0px,
+    21.3px 21.3px  0 0px, 42.6px 21.3px  0 5.6px, 63.8px 21.3px  0 5.6px;
+  }
+
+  75% {
+    box-shadow: 21.3px -21.3px 0 0px, 42.6px -21.3px 0 5.6px, 63.8px -21.3px 0 0px,
+    21.3px 0     0 0px, 42.6px 0     0 0px, 63.8px 0     0 5.6px,
+    21.3px 21.3px  0 0px, 42.6px 21.3px  0 0px, 63.8px 21.3px  0 5.6px;
+  }
+
+  87.5% {
+    box-shadow: 21.3px -21.3px 0 0px, 42.6px -21.3px 0 5.6px, 63.8px -21.3px 0 0px,
+    21.3px 0     0 0px, 42.6px 0     0 5.6px, 63.8px 0     0 0px,
+    21.3px 21.3px  0 5.6px, 42.6px 21.3px  0 0px, 63.8px 21.3px  0 0px;
   }
 }
 
-@keyframes promo-decor-2 {
-  0% {
-    background-image: url('/bitcoin-01-1.png');
-  }
+@keyframes dots-ijr34dmd {
   50% {
-    background-image: url('/bitcoin-01-2.png');
+    box-shadow: 21.3px 0 0 3.4px, 42.6px 0 0 7.8px, 63.900000000000006px 0 0 3.4px;
   }
-  100% {
-    background-image: url('/bitcoin-01-1.png');
-  }
-}
 
-@keyframes promo-decor-3 {
-  0% {
-    background-image: url('/x-01-1.png');
-  }
-  50% {
-    background-image: url('/x-01-2.png');
-  }
   100% {
-    background-image: url('/x-01-1.png');
-  }
-}
-
-@keyframes promo-decor-4 {
-  0% {
-    background-image: url('/telegram-01-1.png');
-  }
-  50% {
-    background-image: url('/telegram-01-2.png');
-  }
-  100% {
-    background-image: url('/telegram-01-1.png');
+    box-shadow: 21.3px 0 0 0, 42.6px 0 0 3.4px, 63.900000000000006px 0 0 7.8px;
   }
 }
