@@ -10,7 +10,7 @@ import {
   Spin,
   theme,
 } from 'antd';
-import Logo from '../../shared/ui/Logo';
+import Logo from '@/shared/ui/Logo';
 import {
   DeleteOutlined,
   LogoutOutlined,
@@ -21,7 +21,7 @@ import {
 const { Header: AntdHeader } = Layout;
 
 import styles from './index.module.scss';
-import CustomButton from '../../shared/ui/CustomButton';
+import CustomButton from '@/shared/ui/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
 // import { logout, selectUser } from '../../redux/slices/auth';
 import { useRouter } from 'next/router';

@@ -25,26 +25,36 @@ const Sidebar = (props: Props) => {
   const { collapsed, setCollapsed } = props;
   const [collapsedMenuWidth, setCollapsedMenuWidth] = useState(200);
 
+  const collapseSidebarOnMobileDevices = () => {
+    if (window.innerWidth < 990) {
+      setCollapsed(true);
+    }
+  }
+
   const items = [
     {
       key: '/news',
       icon: <PicRightOutlined />,
       label: <Link href={'/news'}>Новости</Link>,
+      onClick: collapseSidebarOnMobileDevices,
     },
     {
       key: '/categories',
       icon: <ApartmentOutlined />,
       label: <Link href={'/categories'}>Категории</Link>,
+      onClick: collapseSidebarOnMobileDevices,
     },
     {
       key: '/promo-banners',
       icon: <PicLeftOutlined />,
       label: <Link href={'/promo-banners'}>Промо-баннеры</Link>,
+      onClick: collapseSidebarOnMobileDevices,
     },
     {
       key: '/activities',
       icon: <GiftOutlined />,
       label: <Link href={'/activities'}>Активности</Link>,
+      onClick: collapseSidebarOnMobileDevices,
     },
   ];
 

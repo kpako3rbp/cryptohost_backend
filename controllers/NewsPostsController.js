@@ -194,6 +194,18 @@ export const create = async (req, res) => {
       },
     });
 
+    // Увеличение счетчика в соответствующей категории
+    await prisma.newsCategory.update({
+      where: {
+        id: data.categoryId,
+      },
+      data: {
+        posts_count: {
+          increment: 1,
+        },
+      },
+    });
+
     return res.status(201).json(newsPost);
   } catch (error) {
     return res.status(500).json({
@@ -213,7 +225,7 @@ export const create = async (req, res) => {
 export const update = async (req, res) => {
   try {
     const data = req.body;
-    const { id } = data;
+    const { id, categoryId: newCategoryId } = data;
 
     let currentSlug = slugify(data.title);
 
@@ -227,6 +239,43 @@ export const update = async (req, res) => {
     if (newsPostWithSameSlug) {
       // Если новость с таким слагом уже есть, то добавляем в конце сегодняшнюю дату
       currentSlug = `${currentSlug}-${Date.now()}`;
+    }
+
+    // Получение текущей категории новости
+    const currentNewsPost = await prisma.newsPost.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        category_id: true,
+      },
+    });
+
+
+    // Если категория изменена, увеличение счетчика в новой категории
+    if (currentNewsPost.category_id !== newCategoryId) {
+      await prisma.newsCategory.update({
+        where: {
+          id: newCategoryId,
+        },
+        data: {
+          posts_count: {
+            increment: 1,
+          },
+        },
+      });
+
+      // Уменьшение счетчика в текущей категории
+      await prisma.newsCategory.update({
+        where: {
+          id: currentNewsPost.category_id,
+        },
+        data: {
+          posts_count: {
+            decrement: 1,
+          },
+        },
+      });
     }
 
     await prisma.newsPost.update({
@@ -282,6 +331,28 @@ export const softRemove = async (req, res) => {
         message: 'Новость не найдена',
       });
     }
+
+    // Получение категории текущей новости
+    const currentNewsPost = await prisma.newsPost.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        category_id: true,
+      },
+    });
+
+    // Уменьшение счетчика в текущей категории
+    await prisma.newsCategory.update({
+      where: {
+        id: currentNewsPost.category_id,
+      },
+      data: {
+        posts_count: {
+          decrement: 1,
+        },
+      },
+    });
 
     await prisma.newsPost.update({
       where: {
@@ -341,6 +412,28 @@ export const hardRemove = async (req, res) => {
     );
     deleteCoverImg(imagePath);
     deleteCoverImg(imageThumbPath);
+
+    // Получение категории текущей новости
+    const currentNewsPost = await prisma.newsPost.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        category_id: true,
+      },
+    });
+
+    // Уменьшение счетчика в текущей категории
+    await prisma.newsCategory.update({
+      where: {
+        id: currentNewsPost.category_id,
+      },
+      data: {
+        posts_count: {
+          decrement: 1,
+        },
+      },
+    });
 
     await prisma.newsPost.delete({
       where: {

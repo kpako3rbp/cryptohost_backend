@@ -14,7 +14,7 @@ export const getAll = async (req, res) => {
         deleted: false, // Исключаем удаленные категории
       },
       orderBy: {
-        name: 'asc',
+        created_at: 'desc',
       },
     });
 
@@ -22,6 +22,36 @@ export const getAll = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       message: `Не удалось получить категории: ${error}`,
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+/**
+ *
+ @route GET /api/news-categories/:id
+ @desc Получение одной категории
+ @access Public or Private
+ */
+export const getOne = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const newsCategory = await prisma.newsCategory.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!newsCategory) {
+      return res.status(404).json({ message: 'Категория не найдена' });
+    }
+
+    return res.status(200).json(newsCategory);
+  } catch (error) {
+    return res.status(500).json({
+      message: `Не удалось получить категорию: ${error}`,
     });
   } finally {
     await prisma.$disconnect();
@@ -55,6 +85,7 @@ export const create = async (req, res) => {
     const category = await prisma.newsCategory.create({
       data: {
         name: data.name,
+        color: data.color,
         created_at: new Date(),
         created_by: req.admin.id,
         slug: slugify(data.name),
@@ -89,7 +120,7 @@ export const update = async (req, res) => {
       },
     });
 
-    if (existingNewsCategory) {
+    if (existingNewsCategory && existingNewsCategory.id !== id) {
       return res.status(400).json({
         message: 'Категория с таким именем уже существует',
       });
@@ -102,6 +133,7 @@ export const update = async (req, res) => {
       },
       data: {
         name: data.name,
+        color: data.color,
         slug: slugify(data.name),
         updated: true,
         updated_at: new Date(),
@@ -140,6 +172,12 @@ export const softRemove = async (req, res) => {
     if (!existingNewsCategory) {
       return res.status(404).json({
         message: 'Категория не найдена',
+      });
+    }
+
+    if (existingNewsCategory.posts_count > 0) {
+      return res.status(400).json({
+        message: 'Невозможно удалить категорию у которой есть посты. Сначала удалите связанные посты либо смените их категорию.',
       });
     }
 

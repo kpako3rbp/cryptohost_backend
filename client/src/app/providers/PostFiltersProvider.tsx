@@ -1,12 +1,12 @@
-import {SearchNewsParams} from "../servises/posts/types";
-import {useState} from "react";
-import PostFiltersContext from '../../shared/context/postFiltersContext';
+import { SearchNewsParams } from '../servises/posts/types';
+import { useState } from 'react';
+import PostFiltersContext from '@/shared/context/postFiltersContext';
 
 type Props = {
   children: React.ReactNode[];
 };
 
-const PostFilterProvider = (props: Props) => {
+const PostFiltersProvider = (props: Props) => {
   const { children } = props;
   const [filters, setFilters] = useState<SearchNewsParams>({});
 
@@ -17,4 +17,4 @@ const PostFilterProvider = (props: Props) => {
   );
 };
 
-export default PostFilterProvider;
+export default PostFiltersProvider;

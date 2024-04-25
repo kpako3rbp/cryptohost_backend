@@ -1,35 +1,40 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Breadcrumb,
   Button,
-  Card,
   Col,
   Collapse,
   Divider,
-  Flex,
-  Grid,
   Input,
+  message,
   Row,
   Select,
   Space,
   theme,
 } from 'antd';
-import Link from 'next/link';
-import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
-import { SearchNewsParams } from '../../app/servises/posts/types';
-import { NewsCategory } from '@prisma/client';
+import { CloseOutlined } from '@ant-design/icons';
+import { NewsCategory, NewsPost } from '@prisma/client';
 import { selectSortByOptions } from './config';
+import usePostFilters from '@/shared/hooks/usePostFilters';
+import fetchPosts from '@/app/servises/posts/get-all';
+import { SearchNewsParams } from '@/app/servises/posts/types';
 
 const { Search } = Input;
 
+type NewsPostWithCategory = NewsPost & {
+  category: NewsCategory;
+};
+
 type Props = {
+  token: string;
   categories: NewsCategory[];
-  callback: (params: SearchNewsParams) => void;
-  resetPagination: () => void;
+  setCurrentPosts: (posts: NewsPostWithCategory[]) => void;
+  setCurrentTotal: (total: number) => void;
+  setIsLoading: (state: boolean) => void;
 };
 
 const FilterPosts = (props: Props) => {
-  const { callback, categories, resetPagination } = props;
+  const { token, categories, setCurrentPosts, setCurrentTotal, setIsLoading } =
+    props;
   const {
     token: { colorBorder },
   } = theme.useToken();
@@ -40,47 +45,90 @@ const FilterPosts = (props: Props) => {
     categoryIds: [],
     searchQuery: '',
     sortField: 'published_at',
-    sortOrder: 'desc', // TODO разобраться с алфавитом и поиском по имени категории
+    sortOrder: 'desc',
   } as SearchNewsParams;
 
-  const [filters, setFilters] = useState<SearchNewsParams>({
-    ...initialFiltersState,
-  });
   const [filtersTouched, setFiltersTouched] = useState(false);
+  const [searchQueryValue, setSearchQueryValue] = useState(
+    initialFiltersState.searchQuery
+  );
+  const { filters, setFilters } = usePostFilters();
 
-  // TODO сбрасывать пагинацию при сортировках
-  useEffect(() => {
-    callback(filters);
-  }, [filters]);
+  const fetchFilteredPosts = async (params: SearchNewsParams) => {
+    setIsLoading(true);
+    try {
+      const data = await fetchPosts(token, params);
 
-  console.log('FILTERS!!!', filters);
+      setCurrentPosts(data.posts);
+      setCurrentTotal(data.total);
+      // setIsLoading(false);
+    } catch (err) {
+      message.error('Ошибка при фильтрации постов');
+      console.error('Ошибка при фильтрации постов', err);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleCategory = (value: string[]) => {
-    setFilters({ ...filters, categoryIds: value });
+    setFilters({
+      ...filters,
+      page: initialFiltersState.page,
+      pageSize: initialFiltersState.pageSize,
+      categoryIds: value,
+    });
     setFiltersTouched(true);
-    resetPagination();
   };
 
   const handleSortBy = (value: string) => {
     const sortFieldValue = value.split(' ')[0] as SearchNewsParams['sortField'];
     const sortOrderValue = value.split(' ')[1] as SearchNewsParams['sortOrder'];
-    setFilters({ ...filters, sortField: sortFieldValue, sortOrder: sortOrderValue });
+    setFilters({
+      ...filters,
+      page: initialFiltersState.page,
+      pageSize: initialFiltersState.pageSize,
+      sortField: sortFieldValue,
+      sortOrder: sortOrderValue,
+    });
     setFiltersTouched(true);
-    resetPagination();
   };
 
   const handleSortSearchQuery = (value: string) => {
-    // console.log('value', value);
-    setFilters({ ...filters, searchQuery: value });
+    setFilters({
+      ...filters,
+      page: initialFiltersState.page,
+      pageSize: initialFiltersState.pageSize,
+      searchQuery: value,
+    });
     setFiltersTouched(true);
-    resetPagination();
   };
 
-  const handleResetFilters = () => {
+  const handleResetFilters = async () => {
     setFilters(initialFiltersState);
     setFiltersTouched(false);
-    resetPagination();
+    setSearchQueryValue(initialFiltersState.searchQuery);
+    await fetchFilteredPosts(initialFiltersState);
   };
+
+  useEffect(() => {
+    setFilters(initialFiltersState);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (filtersTouched) {
+        await fetchFilteredPosts(filters);
+      }
+    };
+
+    fetchData();
+  }, [
+    filters.categoryIds,
+    filters.searchQuery,
+    filters.sortField,
+    filters.sortOrder,
+  ]);
 
   const selectCategoriesOptions = categories?.reduce<
     { value: string; label: string; desc: string }[]
@@ -110,12 +158,13 @@ const FilterPosts = (props: Props) => {
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                   <Space.Compact style={{ minWidth: '100%' }}>
                     <Search
-                      onChange={(e) => handleSortSearchQuery(e.target.value)}
-                      value={filters.searchQuery}
+                      // onChange={(e) => handleSortSearchQuery(e.target.value)}
+                      onSearch={handleSortSearchQuery}
+                      onChange={(e) => setSearchQueryValue(e.target.value)}
+                      value={searchQueryValue}
                       size="large"
                       placeholder="Поиск по заголовку"
                     />
-                    {/*<Button size="large" icon={<SearchOutlined />}></Button>*/}
                   </Space.Compact>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>

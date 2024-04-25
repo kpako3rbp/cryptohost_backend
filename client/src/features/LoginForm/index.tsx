@@ -12,11 +12,11 @@ import {
   Spin,
   theme,
 } from 'antd';
-import { isErrorWithMessage } from '../../shared/lib/is-error-with-message';
-import Layout from '../../shared/ui/Layout';
+import { isErrorWithMessage } from '@/shared/lib/is-error-with-message';
+import Layout from '@/shared/ui/Layout';
 import styles from '../PageHeaderWithButton/index.module.scss';
 import { useSession } from 'next-auth/react';
-import ErrorMessage from '../../shared/ui/ErrorMessage';
+import ErrorMessage from '@/shared/ui/ErrorMessage';
 import { signIn } from 'next-auth/react';
 
 const LoginForm = () => {

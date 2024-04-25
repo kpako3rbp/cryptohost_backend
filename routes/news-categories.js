@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  NewsCategoryController,
+  NewsCategoryController, NewsPostsController,
 } from '../controllers/index.js';
 import { authAdmin } from '../middleware/auth.js';
 import handleValidationErrors from '../middleware/handle-validation-errors.js';
@@ -13,6 +13,7 @@ router.get('/public', NewsCategoryController.getAll);
 
 // Admin routes
 router.get('/', authAdmin, NewsCategoryController.getAll);
+router.get('/:id', authAdmin, NewsCategoryController.getOne);
 router.post(
   '/create',
   authAdmin,

@@ -38,7 +38,10 @@
   top: 0;
   left: 0;
 
-  background-color: rgba(38, 24, 77, 0.05);
+  // background-color: rgba(38, 24, 77, 0.3);
+  background-image: radial-gradient(#e0e0e0 1px, transparent 1px) !important;
+  background-size: 18px 18px !important;
+  background-color: rgba(247, 248, 250, 0.9) !important;
 }
 
 .spinner {

@@ -10,6 +10,7 @@ type Props = {
   popover?: string | undefined;
   type?: 'link' | 'text' | 'default' | 'primary' | 'dashed' | undefined;
   danger?: boolean | undefined;
+  disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement> | undefined;
   icon?: React.ReactNode | false;
   confirm?: {
@@ -20,7 +21,7 @@ type Props = {
 };
 
 const CustomButton = (props: Props) => {
-  const { popover, type, onClick, icon = false, danger, confirm } = props;
+  const { popover, type, onClick, icon = false, danger, confirm, disabled } = props;
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -73,6 +74,7 @@ const CustomButton = (props: Props) => {
             onClick={showPopconfirm}
             icon={icon}
             danger={danger}
+            disabled={disabled}
           />
         )}
       </Popconfirm>
@@ -81,10 +83,10 @@ const CustomButton = (props: Props) => {
 
   return popover ? (
     <Popover content={popover}>
-      <Button type={type} onClick={onClick} icon={icon} danger={danger} />
+      <Button type={type} onClick={onClick} icon={icon} danger={danger} disabled={disabled}/>
     </Popover>
   ) : (
-    <Button type={type} onClick={onClick} icon={icon} danger={danger} />
+    <Button type={type} onClick={onClick} icon={icon} danger={danger} disabled={disabled}/>
   );
 };
 

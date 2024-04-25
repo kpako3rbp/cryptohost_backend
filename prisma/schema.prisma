@@ -45,16 +45,18 @@ model PromoBanner {
 }
 
 model NewsCategory {
-  id         String     @id @default(uuid())
-  created_at DateTime
-  created_by String
-  name       String     @unique
-  slug       String     @unique
-  news_posts NewsPost[]
-  updated    Boolean    @default(false)
-  updated_at DateTime?
-  updated_by String     @default("")
-  deleted    Boolean    @default(false)
+  id          String     @id @default(uuid())
+  created_at  DateTime
+  created_by  String
+  name        String     @unique
+  posts_count Int        @default(0)
+  color       String     @default("")
+  slug        String     @unique
+  news_posts  NewsPost[]
+  updated     Boolean    @default(false)
+  updated_at  DateTime?
+  updated_by  String     @default("")
+  deleted     Boolean    @default(false)
 }
 
 model NewsPost {

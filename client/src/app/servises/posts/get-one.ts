@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import routes from '../../../../routes';
 import { message } from 'antd';
 
@@ -15,8 +15,10 @@ const fetchPost = async (token: string, id: string) => {
   } catch (err) {
     console.error('Не удалось получить пост', err);
     // message.error('Не удалось получить пост');
-    if (typeof window !== 'undefined') {
-      message.error('Не удалось получить пост');
+    if (err instanceof AxiosError && err.response?.data.message) {
+      if (typeof window !== 'undefined') {
+        message.error(`Ошибка: ${err.response?.data.message}`);
+      }
     }
   }
 };

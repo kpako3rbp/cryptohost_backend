@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { HomeOutlined } from '@ant-design/icons';
 import Head from 'next/head';
@@ -10,21 +10,20 @@ import { GetServerSidePropsContext } from 'next';
 import { getServerSession, Session } from 'next-auth';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
-import fetchCategories from '@/app/servises/categories/get-all';
-import fetchPost from '@/app/servises/posts/get-one';
-import updatePost from '@/app/servises/posts/update';
+import fetchCategories from "@/app/servises/categories/get-all";
+import addPost from "@/app/servises/posts/add";
+import addCategory from "@/app/servises/categories/add";
+import NewsCategoryForm from "@/features/NewsCategoryForm";
 
 const { Title } = Typography;
 
 type Props = {
-  post: NewsPost;
   categories: NewsCategory[];
   token: string;
-  id: string;
 };
 
-const UpdatePost = (props: Props) => {
-  const { post, categories, token, id } = props;
+const AddCategory = (props: Props) => {
+  const { token } = props;
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -35,20 +34,23 @@ const UpdatePost = (props: Props) => {
       title: <HomeOutlined />,
     },
     {
-      path: '/',
-      title: 'Новости',
+      path: '/categories',
+      title: 'Категории',
     },
     {
-      title: 'Редактирование новости',
+      title: 'Добавление категории',
     },
   ];
 
-  const handleUpdateNewsPost = async (data: NewsPost) => {
+  // const [error, setError] = useState('');
+
+  const handleAddNewsCategory = async (data: NewsPost) => {
     setLoading(true);
     try {
-      await updatePost(token, id, data, () => router.push('/news'));
+      await addCategory(token, data, () => router.push('/categories'));
+      // setLoading(false);
     } catch (err) {
-      console.error('Не удалось обновить новость', err);
+      console.error('Не удалось добавить категорию', err);
     } finally {
       setLoading(false);
     }
@@ -57,18 +59,15 @@ const UpdatePost = (props: Props) => {
   return (
     <>
       <Head>
-        <title>Cryptohost: обновление новости</title>
+        <title>Cryptohost: добавление категории</title>
       </Head>
       <Breadcrumbs items={paths}></Breadcrumbs>
       <Title level={2} style={{ padding: '5px 0 15px 0' }}>
-        Редактирование новости
+        Добавление новости
       </Title>
-      <NewsPostForm
-        onFinish={handleUpdateNewsPost}
-        btnText="Редактировать новость"
-        categories={categories}
+      <NewsCategoryForm
+        onFinish={handleAddNewsCategory}
         token={token}
-        post={post}
         loading={loading}
       />
     </>
@@ -84,20 +83,11 @@ export const getServerSideProps = async (
     authOptions
   )) as Session;
 
-  const { params } = context;
-  const id = params?.id as string;
-
-  const categories = await fetchCategories(session.user.token);
-  const post = await fetchPost(session.user.token, id);
-
   return {
     props: {
-      post,
-      categories,
       token: session.user.token,
-      id,
     },
   };
 };
 
-export default UpdatePost;
+export default AddCategory;

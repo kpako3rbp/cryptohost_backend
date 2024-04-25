@@ -1,7 +1,7 @@
-import axios from 'axios';
-import routes from '../../../../routes';
+import axios, {AxiosError} from 'axios';
 import { message } from 'antd';
 import { NewsPost } from '@prisma/client';
+import routes from "../../../../routes";
 
 const addPost = async (token: string, formData: NewsPost, callback: () => void) => {
   try {
@@ -16,8 +16,10 @@ const addPost = async (token: string, formData: NewsPost, callback: () => void) 
   } catch (err) {
     console.error('Не удалось добавить пост', err);
 
-    if (typeof window !== 'undefined') {
-      message.error('Не удалось добавить пост');
+    if (err instanceof AxiosError && err.response?.data.message) {
+      if (typeof window !== 'undefined') {
+        message.error(`Ошибка: ${err.response?.data.message}`);
+      }
     }
   }
 };

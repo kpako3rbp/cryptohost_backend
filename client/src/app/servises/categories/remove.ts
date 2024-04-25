@@ -2,10 +2,10 @@ import axios, {AxiosError} from 'axios';
 import routes from '../../../../routes';
 import { message } from 'antd';
 
-const removePost = async (token: string, id: string) => {
+const removeCategory = async (token: string, id: string) => {
   try {
     const { data } = await axios.post(
-      routes.newsRemove(id),
+      routes.categoriesRemove(id),
       { id },
       {
         headers: {
@@ -16,7 +16,7 @@ const removePost = async (token: string, id: string) => {
 
     message.success(data.message);
   } catch (err) {
-    console.error('Не удалось удалить пост', err);
+    console.error('Не удалось удалить категорию', err);
 
     if (err instanceof AxiosError && err.response?.data.message) {
       if (typeof window !== 'undefined') {
@@ -26,4 +26,4 @@ const removePost = async (token: string, id: string) => {
   }
 };
 
-export default removePost;
+export default removeCategory;

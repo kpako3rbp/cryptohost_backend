@@ -1,6 +1,6 @@
 import { Flex, Row, Typography } from 'antd';
-import styles from '../../features/PageHeaderWithButton/index.module.scss';
-import LoginForm from '../../features/LoginForm';
+import styles from '@/features/PageHeaderWithButton/index.module.scss';
+import LoginForm from '@/features/LoginForm';
 import Head from 'next/head';
 import React from 'react';
 

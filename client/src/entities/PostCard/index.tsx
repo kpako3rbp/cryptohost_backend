@@ -6,15 +6,15 @@ import {
   ExportOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
-import CustomButton from '../../shared/ui/CustomButton';
+import CustomButton from '@/shared/ui/CustomButton';
 
 import { NewsCategory, NewsPost } from '@prisma/client';
 import { baseUrl, extUrl } from '../../../routes';
-import { formatDateTime } from '../../shared/lib/format-date';
+import { formatDateTime } from '@/shared/lib/format-date';
 import { useRouter } from 'next/router';
 
 import styles from './index.module.scss';
-import EntityCardSkeleton from "./Skeleton";
+import PostCardSkeleton from "./Skeleton";
 
 type Props = {
   entityName: string;
@@ -31,7 +31,7 @@ type Props = {
   isLoading: boolean;
 };
 
-const EntityCard = (props: Props) => {
+const PostCard = (props: Props) => {
   const {
     entityName,
     updateUrl,
@@ -54,9 +54,9 @@ const EntityCard = (props: Props) => {
   if (isLoading) {
     const skeletonCount = 10;
     const skeletons = Array.from({ length: skeletonCount }, (_, index) => (
-      <EntityCardSkeleton key={index} />
+      <PostCardSkeleton key={index} />
     ));
-    return skeletons;
+    return <>{skeletons}</>;
   }
 
   //console.log("${extUrl}/${router.pathname}/${slug}", `${extUrl}${router.pathname}/${slug}`)
@@ -81,7 +81,7 @@ const EntityCard = (props: Props) => {
             <h2>{title}</h2>
             {category && (
               <Tag
-                color="cyan"
+                color={category.color}
                 style={{ display: 'inline-block', width: 'fit-content' }}
               >
                 {category.name}
@@ -140,4 +140,4 @@ const EntityCard = (props: Props) => {
   );
 };
 
-export default EntityCard;
+export default PostCard;

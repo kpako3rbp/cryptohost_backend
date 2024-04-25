@@ -12,7 +12,7 @@ import {
   theme,
   Typography,
 } from 'antd';
-import ErrorMessage from '../../shared/ui/ErrorMessage';
+import ErrorMessage from '@/shared/ui/ErrorMessage';
 import { NewsCategory, NewsPost } from '@prisma/client';
 import {
   AlignLeftOutlined,
@@ -110,7 +110,7 @@ const NewsPostForm = (props: Props) => {
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error('Заголовок должен быть быть от 3 до 100 символов')
+                    new Error('Заголовок должен быть от 3 до 100 символов')
                   );
                 },
               }),
@@ -153,28 +153,29 @@ const NewsPostForm = (props: Props) => {
           </Form.Item>
         </div>
 
-        <div style={{ marginTop: 40 }}></div>
-        <Title style={{ marginBottom: '0' }} level={5}>
-          <ApartmentOutlined /> Категория*
-        </Title>
-        <Text type="secondary">Выберите категорию новости</Text>
-        <Form.Item
-          name="categoryId"
-          shouldUpdate={true}
-          rules={[
-            {
-              required: true,
-              message: 'Обязательное поле',
-            },
-          ]}
-        >
-          <Select
-            size="large"
-            placeholder="Категория новости"
-            style={{ marginTop: '10px' }}
-            options={selectOptions}
-          />
-        </Form.Item>
+        <div style={{ marginTop: 40 }}>
+          <Title style={{ marginBottom: '0' }} level={5}>
+            <ApartmentOutlined /> Категория*
+          </Title>
+          <Text type="secondary">Выберите категорию новости</Text>
+          <Form.Item
+            name="categoryId"
+            shouldUpdate={true}
+            rules={[
+              {
+                required: true,
+                message: 'Обязательное поле',
+              },
+            ]}
+          >
+            <Select
+              size="large"
+              placeholder="Категория новости"
+              style={{ marginTop: '10px' }}
+              options={selectOptions}
+            />
+          </Form.Item>
+        </div>
 
         <div style={{ marginTop: 40 }}>
           <Title style={{ marginBottom: '0' }} level={5}>
@@ -240,9 +241,7 @@ const NewsPostForm = (props: Props) => {
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error(
-                      'Мета-заголовок должен быть быть от 3 до 100 символов'
-                    )
+                    new Error('Мета-заголовок должен быть от 3 до 100 символов')
                   );
                 },
               }),

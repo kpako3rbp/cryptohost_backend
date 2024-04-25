@@ -3,7 +3,7 @@ import { Card as AntdCard, Skeleton, theme, Flex } from 'antd';
 
 import styles from './index.module.scss';
 
-const EntityCardSkeleton = () => {
+const PostCardSkeleton = () => {
   const { token } = theme.useToken();
   return (
     <AntdCard style={{ borderRadius: token.borderRadiusLG, marginTop: '8px' }}>
@@ -11,23 +11,23 @@ const EntityCardSkeleton = () => {
         gap="large"
         wrap="wrap"
         justify="space-between"
-        className={styles.entityCardContent}
+        className={styles.categoryCardContent}
       >
         <Flex gap="large" className={styles.entityCardInner}>
           <div
-            className={styles.entityCardCover}
+            className={styles.categoryCardCover}
             style={{ borderRadius: token.borderRadiusLG }}
           >
             <Skeleton.Image />
           </div>
-          <Flex gap={1} vertical className={styles.entityCardInfo}>
+          <Flex gap={1} vertical className={styles.categoryCardInfo}>
             <Skeleton.Input style={{ width: 220, height: 24 }} active />
             <Skeleton.Input style={{ width: 50, height: 20, marginTop: 5 }} active />
             <Skeleton.Input style={{ width: 200, height: 14, marginTop: 5 }} active />
           </Flex>
         </Flex>
         <Flex gap="small" wrap="wrap" vertical>
-          <Flex gap="small" wrap="wrap" className={styles.entityCardTools}>
+          <Flex gap="small" wrap="wrap" className={styles.categoryCardTools}>
             <Skeleton.Button size="small" active />
             <Skeleton.Button size="small" active />
             <Skeleton.Button size="small" active />
@@ -38,4 +38,4 @@ const EntityCardSkeleton = () => {
   );
 };
 
-export default EntityCardSkeleton;
+export default PostCardSkeleton;

@@ -43,10 +43,10 @@ export const promoBannerValidation = {
     body('meta_title')
       .optional()
       .isLength({ min: 3, max: 100 })
-      .withMessage('Мета-заголовок должен быть быть от 3 до 100 символов'),
+      .withMessage('Мета-заголовок должен быть от 3 до 100 символов'),
     body('title')
       .isLength({ min: 3, max: 100 })
-      .withMessage('Заголовок должен быть быть от 3 до 100 символов'),
+      .withMessage('Заголовок должен быть от 3 до 100 символов'),
     body('description')
       .isLength({ min: 3, max: 100 })
       .withMessage('Описание должно содержать от 3 до 100 символов'),
@@ -65,11 +65,11 @@ export const promoBannerValidation = {
     body('meta_title')
       .optional()
       .isLength({ min: 3, max: 100 })
-      .withMessage('Мета-заголовок должен быть быть от 3 до 100 символов'),
+      .withMessage('Мета-заголовок должен быть от 3 до 100 символов'),
     body('title')
       .optional()
       .isLength({ min: 3, max: 100 })
-      .withMessage('Заголовок должен быть быть от 3 до 100 символов'),
+      .withMessage('Заголовок должен быть от 3 до 100 символов'),
     body('description')
       .optional()
       .isLength({ min: 3, max: 100 })

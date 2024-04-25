@@ -17,10 +17,6 @@ const Preloader = (props: Props) => {
   });
 
   return (
-    /*<div className={preloaderClassNames}>
-      <div className={styles.spinner}></div>
-      <span>Идет загрузка</span>
-    </div>*/
    <div className={styles.container}>
      <div className={styles.spinner}></div>
    </div>
