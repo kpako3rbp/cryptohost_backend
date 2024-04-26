@@ -104,7 +104,7 @@ const Sidebar = (props: Props) => {
       }}
       style={{
         overflowY: 'auto',
-        height: '100vh',
+        height: '100dvh',
         borderRight: '1px solid rgba(5, 5, 5, 0.06)',
       }}
       className={styles.sidebar}

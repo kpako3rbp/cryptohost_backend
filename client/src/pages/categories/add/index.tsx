@@ -63,7 +63,7 @@ const AddCategory = (props: Props) => {
       </Head>
       <Breadcrumbs items={paths}></Breadcrumbs>
       <Title level={2} style={{ padding: '5px 0 15px 0' }}>
-        Добавление новости
+        Добавление категории
       </Title>
       <NewsCategoryForm
         onFinish={handleAddNewsCategory}

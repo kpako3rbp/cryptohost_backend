@@ -10,7 +10,7 @@ const addCategory = async (
   callback: () => void
 ) => {
   try {
-    await axios.post(routes.categoriesCreate(), formData, {
+    await axios.post(routes.create('news-categories'), formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

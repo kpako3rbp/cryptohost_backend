@@ -59,6 +59,10 @@
     &Inner {
       flex-wrap: wrap;
     }
+
+    &Info {
+      min-width: 100%;
+    }
   }
 }
 

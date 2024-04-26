@@ -1,9 +1,9 @@
 import axios, {AxiosError} from 'axios';
 import { message } from 'antd';
-import { SearchNewsParams } from './types';
+import { SearchPostParams } from './types';
 import routes from "../../../../routes";
 
-const fetchPosts = async (token: string, searchParams?: SearchNewsParams) => {
+const fetchPosts = async (token: string, searchParams?: SearchPostParams) => {
   const params = {
     page: searchParams?.page,
     pageSize: searchParams?.pageSize,
@@ -15,7 +15,7 @@ const fetchPosts = async (token: string, searchParams?: SearchNewsParams) => {
   };
 
   try {
-    const { data } = await axios.get(routes.news(), {
+    const { data } = await axios.get(routes.getAll('news-posts'), {
       params,
       headers: {
         Authorization: `Bearer ${token}`,

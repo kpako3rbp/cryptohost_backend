@@ -17,7 +17,13 @@ const __dirname = dirname(__filename);
  */
 export const getAll = async (req, res) => {
   try {
-    const { page = 1, pageSize = 10 } = req.query;
+    const {
+      page = 1,
+      pageSize = 10,
+      searchQuery = '', // 1. Добавление параметра поиска по заголовку
+      sortField = 'created_at', // Поле сортировки по умолчанию
+      sortOrder = 'desc', // Направление сортировки по умолчанию
+    } = req.query;
 
     const pageSizeInt = parseInt(pageSize, 10);
     const skip = (page - 1) * pageSizeInt;
@@ -25,6 +31,14 @@ export const getAll = async (req, res) => {
     const where = {
       deleted: false,
     };
+
+    // Добавляем поиск по заголовку
+    if (searchQuery) {
+      where.title = {
+        contains: searchQuery,
+        // mode: 'insensitive', // Регистронезависимый поиск
+      };
+    }
 
     const totalCount = await prisma.cryptoActivity.count({
       where,
@@ -35,7 +49,7 @@ export const getAll = async (req, res) => {
       skip,
       take: pageSizeInt,
       orderBy: {
-        published_at: 'desc',
+        [sortField]: sortOrder,
       },
       // Отдаем только те поля, который нужны
       select: {

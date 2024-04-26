@@ -10,7 +10,7 @@ const updatePost = async (token: string, id: string, formData: NewsPost, callbac
   };
 
   try {
-    await axios.put(routes.newsUpdate(id), requestData, {
+    await axios.put(routes.update('news-posts', id), requestData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

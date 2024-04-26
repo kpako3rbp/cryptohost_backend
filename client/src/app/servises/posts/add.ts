@@ -5,7 +5,7 @@ import routes from "../../../../routes";
 
 const addPost = async (token: string, formData: NewsPost, callback: () => void) => {
   try {
-    await axios.post(routes.newsCreate(), formData, {
+    await axios.post(routes.create('news-posts'), formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -1,4 +1,4 @@
-import { SearchNewsParams } from '../servises/posts/types';
+import { SearchPostParams } from '../servises/posts/types';
 import { useState } from 'react';
 import PostFiltersContext from '@/shared/context/postFiltersContext';
 
@@ -8,7 +8,7 @@ type Props = {
 
 const PostFiltersProvider = (props: Props) => {
   const { children } = props;
-  const [filters, setFilters] = useState<SearchNewsParams>({});
+  const [filters, setFilters] = useState<SearchPostParams>({});
 
   return (
     <PostFiltersContext.Provider value={{ filters, setFilters }}>

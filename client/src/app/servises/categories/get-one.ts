@@ -4,7 +4,7 @@ import { message } from 'antd';
 
 const fetchCategory = async (token: string, id: string) => {
   try {
-    const { data } = await axios.get(routes.categoriesSingle(id),  {
+    const { data } = await axios.get(routes.getAll('news-categories', id),  {
       headers: {
         Authorization: `Bearer ${token}`,
       },

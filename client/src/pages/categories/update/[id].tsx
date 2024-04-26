@@ -60,7 +60,7 @@ const UpdateCategory = (props: Props) => {
   return (
     <>
       <Head>
-        <title>Cryptohost: добавление категории</title>
+        <title>Cryptohost: редактирование категории</title>
       </Head>
       <Breadcrumbs items={paths}></Breadcrumbs>
       <Title level={2} style={{ padding: '5px 0 15px 0' }}>

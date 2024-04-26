@@ -10,7 +10,7 @@ const updateCategory = async (token: string, id: string, formData: NewsPost, cal
   };
 
   try {
-    await axios.put(routes.categoriesUpdate(id), requestData, {
+    await axios.put(routes.update('news-categories', id), requestData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

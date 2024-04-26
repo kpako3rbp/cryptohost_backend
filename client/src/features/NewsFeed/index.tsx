@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NewsCategory, NewsPost } from '@prisma/client';
+import {CryptoActivity, NewsCategory, NewsPost} from '@prisma/client';
 import { Card, Empty, message, Pagination } from 'antd';
 import CardGrid from '@/shared/ui/CardGrid';
 import fetchPosts from '@/app/servises/posts/get-all';
@@ -7,13 +7,15 @@ import usePostFilters from '@/shared/hooks/usePostFilters';
 import FilterPosts from '@/features/FilterPosts';
 import PostCard from '@/entities/PostCard';
 import removePost from '@/app/servises/posts/remove';
+import FilterPostsPanel from "@/features/FilterPostsPanel";
+import {SearchPostParams} from "@/app/servises/posts/types";
 
 type NewsPostWithCategory = NewsPost & {
   category: NewsCategory;
 };
 
 type NewsFeedProps = {
-  categories: NewsCategory[];
+  categories?: NewsCategory[];
   posts: NewsPostWithCategory[];
   total: number;
   token: string;
@@ -66,14 +68,32 @@ const NewsFeed = (props: NewsFeedProps) => {
     }
   };
 
+  const fetchFilteredPosts = async (params: SearchPostParams) => {
+    setIsLoading(true);
+    try {
+      const data = await fetchPosts(token, params);
+
+      setCurrentPosts(data.posts);
+      setCurrentTotal(data.total);
+      // setIsLoading(false);
+    } catch (err) {
+      message.error('Ошибка при фильтрации постов');
+      console.error('Ошибка при фильтрации постов', err);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <CardGrid>
-      <FilterPosts
+      <FilterPostsPanel
         token={token}
         categories={categories}
         setCurrentPosts={setCurrentPosts}
         setCurrentTotal={setCurrentTotal}
         setIsLoading={setIsLoading}
+        fetchFilteredPosts={fetchFilteredPosts}
       />
       {currentPosts.length > 0 ? (
         <>
@@ -91,6 +111,7 @@ const NewsFeed = (props: NewsFeedProps) => {
               category={post.category}
               handleRemove={() => handleRemovePost(post.id)}
               isLoading={isLoading}
+              views={post.views}
             />
           ))}
           <Pagination

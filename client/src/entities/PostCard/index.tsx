@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card as AntdCard, Tag, theme, Flex } from 'antd';
+import { Card as AntdCard, Tag, theme, Flex, Typography } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
-  ExportOutlined,
+  ExportOutlined, EyeOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import CustomButton from '@/shared/ui/CustomButton';
@@ -12,6 +12,7 @@ import { NewsCategory, NewsPost } from '@prisma/client';
 import { baseUrl, extUrl } from '../../../routes';
 import { formatDateTime } from '@/shared/lib/format-date';
 import { useRouter } from 'next/router';
+const { Text } = Typography;
 
 import styles from './index.module.scss';
 import PostCardSkeleton from "./Skeleton";
@@ -29,6 +30,7 @@ type Props = {
   hasTools?: boolean;
   handleRemove?: () => void;
   isLoading: boolean;
+  views: number;
 };
 
 const PostCard = (props: Props) => {
@@ -45,6 +47,7 @@ const PostCard = (props: Props) => {
     hasTools = true,
     handleRemove,
     isLoading,
+    views
   } = props;
   const {
     token: { colorTextTertiary, colorTextQuaternary, borderRadiusLG },
@@ -79,14 +82,21 @@ const PostCard = (props: Props) => {
           )}
           <Flex gap={1} vertical className={styles.entityCardInfo}>
             <h2>{title}</h2>
-            {category && (
-              <Tag
-                color={category.color}
-                style={{ display: 'inline-block', width: 'fit-content' }}
-              >
-                {category.name}
-              </Tag>
-            )}
+
+            <Flex>
+              {category && (
+                <Tag
+                  color={category.color}
+                  style={{ display: 'inline-block', width: 'fit-content' }}
+                >
+                  {category.name}
+                </Tag>
+              )}
+              <div>
+                 <Text type="secondary" style={{fontSize: 13}}><EyeOutlined /> {views}</Text>
+              </div>
+            </Flex>
+
             <time
               className={styles.entityCardTime}
               style={{ color: colorTextTertiary }}

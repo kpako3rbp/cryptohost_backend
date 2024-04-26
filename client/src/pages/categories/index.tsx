@@ -62,9 +62,10 @@ const Categories = (props: Props) => {
         buttonText={'Создать'}
         buttonLink={'categories/add'}
       />
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} style={{paddingBottom: '40px'}}>
         {currentCategories.map((category) => (
           <Col
+            key={category.id}
             xs={{ flex: '100%' }}
             sm={{ flex: '100%' }}
             md={{ flex: '50%' }}

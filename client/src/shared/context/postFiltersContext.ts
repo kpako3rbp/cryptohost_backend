@@ -1,9 +1,9 @@
 import { createContext } from 'react';
-import { SearchNewsParams } from '@/app/servises/posts/types';
+import { SearchPostParams } from '@/app/servises/posts/types';
 
 type FiltersContextType = {
-  filters: SearchNewsParams;
-  setFilters: (filters: SearchNewsParams) => void;
+  filters: SearchPostParams;
+  setFilters: (filters: SearchPostParams) => void;
 };
 
 const PostFiltersContext = createContext<FiltersContextType>({

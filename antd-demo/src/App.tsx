@@ -18,7 +18,8 @@ const App: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    // 100vh?
+    <Layout>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"

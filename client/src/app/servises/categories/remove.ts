@@ -5,7 +5,7 @@ import { message } from 'antd';
 const removeCategory = async (token: string, id: string) => {
   try {
     const { data } = await axios.post(
-      routes.categoriesRemove(id),
+      routes.remove('news-categories', id),
       { id },
       {
         headers: {

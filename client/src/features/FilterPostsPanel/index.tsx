@@ -16,7 +16,7 @@ import { NewsCategory, NewsPost } from '@prisma/client';
 import { selectSortByOptions } from './config';
 import usePostFilters from '@/shared/hooks/usePostFilters';
 import fetchPosts from '@/app/servises/posts/get-all';
-import { SearchNewsParams } from '@/app/servises/posts/types';
+import { SearchPostParams } from '@/app/servises/posts/types';
 
 const { Search } = Input;
 
@@ -26,15 +26,22 @@ type NewsPostWithCategory = NewsPost & {
 
 type Props = {
   token: string;
-  categories: NewsCategory[];
+  categories?: NewsCategory[];
   setCurrentPosts: (posts: NewsPostWithCategory[]) => void;
   setCurrentTotal: (total: number) => void;
   setIsLoading: (state: boolean) => void;
+  fetchFilteredPosts: (params: any) => void;
 };
 
-const FilterPosts = (props: Props) => {
-  const { token, categories, setCurrentPosts, setCurrentTotal, setIsLoading } =
-    props;
+const FilterPostsPanel = (props: Props) => {
+  const {
+    token,
+    categories,
+    setCurrentPosts,
+    setCurrentTotal,
+    setIsLoading,
+    fetchFilteredPosts,
+  } = props;
   const {
     token: { colorBorder },
   } = theme.useToken();
@@ -42,34 +49,19 @@ const FilterPosts = (props: Props) => {
   const initialFiltersState = {
     page: 1,
     pageSize: 10,
-    categoryIds: [],
+    // categoryIds: [],
     searchQuery: '',
     sortField: 'published_at',
     sortOrder: 'desc',
-  } as SearchNewsParams;
+  } as SearchPostParams;
+
+  if (categories) initialFiltersState.categoryIds = [];
 
   const [filtersTouched, setFiltersTouched] = useState(false);
   const [searchQueryValue, setSearchQueryValue] = useState(
     initialFiltersState.searchQuery
   );
   const { filters, setFilters } = usePostFilters();
-
-  const fetchFilteredPosts = async (params: SearchNewsParams) => {
-    setIsLoading(true);
-    try {
-      const data = await fetchPosts(token, params);
-
-      setCurrentPosts(data.posts);
-      setCurrentTotal(data.total);
-      // setIsLoading(false);
-    } catch (err) {
-      message.error('Ошибка при фильтрации постов');
-      console.error('Ошибка при фильтрации постов', err);
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleCategory = (value: string[]) => {
     setFilters({
@@ -82,8 +74,8 @@ const FilterPosts = (props: Props) => {
   };
 
   const handleSortBy = (value: string) => {
-    const sortFieldValue = value.split(' ')[0] as SearchNewsParams['sortField'];
-    const sortOrderValue = value.split(' ')[1] as SearchNewsParams['sortOrder'];
+    const sortFieldValue = value.split(' ')[0] as SearchPostParams['sortField'];
+    const sortOrderValue = value.split(' ')[1] as SearchPostParams['sortOrder'];
     setFilters({
       ...filters,
       page: initialFiltersState.page,
@@ -179,24 +171,26 @@ const FilterPosts = (props: Props) => {
                   />
                 </Col>
               </Row>
-              <Select
-                size="large"
-                style={{ minWidth: '100%', marginTop: '20px' }}
-                mode="multiple"
-                placeholder="Категории"
-                defaultValue={initialFiltersState.categoryIds}
-                value={filters.categoryIds}
-                onChange={handleCategory}
-                options={selectCategoriesOptions}
-                optionRender={(option) => (
-                  <Space>
-                    <span role="img" aria-label={option.data.label}>
-                      {option.data.emoji}
-                    </span>
-                    {option.data.desc}
-                  </Space>
-                )}
-              />
+              {categories && (
+                <Select
+                  size="large"
+                  style={{ minWidth: '100%', marginTop: '20px' }}
+                  mode="multiple"
+                  placeholder="Категории"
+                  defaultValue={initialFiltersState.categoryIds}
+                  value={filters.categoryIds}
+                  onChange={handleCategory}
+                  options={selectCategoriesOptions}
+                  optionRender={(option) => (
+                    <Space>
+                      <span role="img" aria-label={option.data.label}>
+                        {option.data.emoji}
+                      </span>
+                      {option.data.desc}
+                    </Space>
+                  )}
+                />
+              )}
               {filtersTouched && (
                 <>
                   <Divider />
@@ -217,4 +211,4 @@ const FilterPosts = (props: Props) => {
   );
 };
 
-export default FilterPosts;
+export default FilterPostsPanel;

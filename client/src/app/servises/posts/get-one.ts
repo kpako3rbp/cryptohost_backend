@@ -3,9 +3,9 @@ import routes from '../../../../routes';
 import { message } from 'antd';
 
 const fetchPost = async (token: string, id: string) => {
-  console.log('routes.newsSingle(id)', routes.newsSingle(id))
+  // console.log('routes.newsSingle(id)', routes.newsSingle(id))
   try {
-    const { data } = await axios.get(routes.newsSingle(id),  {
+    const { data } = await axios.get(routes.getOne('news-posts', id),  {
       headers: {
         Authorization: `Bearer ${token}`,
       },

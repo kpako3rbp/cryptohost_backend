@@ -11,26 +11,13 @@ export default {
   adminRegister: () => [baseUrl, apiPath, 'admin', 'register'].join('/'),
   adminCurrent: () => [baseUrl, apiPath, 'current'].join('/'),
 
-  // News
-  news: () => [baseUrl, apiPath, 'news-posts'].join('/'),
-  newsSingle: (id) => [baseUrl, apiPath, 'news-posts', id].join('/'),
-  newsCreate: () => [baseUrl, apiPath, 'news-posts', 'create'].join('/'),
-  newsUpdate: (id) => [baseUrl, apiPath, 'news-posts', 'update', id].join('/'),
-  newsRemove: (id) => [baseUrl, apiPath, 'news-posts', 'remove-hard', id].join('/'),
-  newsPublic: () => [baseUrl, apiPath, 'news-posts', 'public'].join('/'),
-
-  // Categories
-  categories: () => [baseUrl, apiPath, 'news-categories'].join('/'),
-  categoriesSingle: (id) => [baseUrl, apiPath, 'news-categories', id].join('/'),
-  categoriesCreate: () => [baseUrl, apiPath, 'news-categories', 'create'].join('/'),
-  categoriesUpdate: (id) => [baseUrl, apiPath, 'news-categories', 'update', id].join('/'),
-  categoriesRemove: (id) => [baseUrl, apiPath, 'news-categories', 'remove-hard', id].join('/'),
-
-  // Promo-banner
-  promoBanners: () => [baseUrl, apiPath, 'promo-banners'].join('/'),
-
-  // Activities
-  activities: () => [baseUrl, apiPath, 'activities'].join('/'),
+  // CRUD
+  getAll: (pathname) => [baseUrl, apiPath, pathname].join('/'),
+  getOne: (pathname, id) => [baseUrl, apiPath, pathname, id].join('/'),
+  create: (pathname) => [baseUrl, apiPath, pathname, 'create'].join('/'),
+  update: (pathname, id) => [baseUrl, apiPath, pathname, 'update', id].join('/'),
+  remove: (pathname, id) => [baseUrl, apiPath, pathname, 'remove-hard', id].join('/'),
+  getAllPublic: (pathname) => [baseUrl, apiPath, pathname, 'public'].join('/'),
 
   // Common
   upload: (entityName) => [baseUrl, apiPath, 'upload', entityName].join('/'),

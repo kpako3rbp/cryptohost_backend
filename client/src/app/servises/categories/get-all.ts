@@ -4,7 +4,7 @@ import routes from "../../../../routes";
 
 const fetchCategories = async (token: string) => {
   try {
-    const { data } = await axios.get(routes.categories(), {
+    const { data } = await axios.get(routes.getAll('news-categories'), {
       headers: {
         Authorization: `Bearer ${token}`,
       },

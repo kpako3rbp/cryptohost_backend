@@ -5,7 +5,7 @@ import { message } from 'antd';
 const removePost = async (token: string, id: string) => {
   try {
     const { data } = await axios.post(
-      routes.newsRemove(id),
+      routes.remove('news-posts', id),
       { id },
       {
         headers: {
