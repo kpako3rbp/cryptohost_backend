@@ -15,8 +15,8 @@ import { CloseOutlined } from '@ant-design/icons';
 import { NewsCategory, NewsPost } from '@prisma/client';
 import { selectSortByOptions } from './config';
 import usePostFilters from '@/shared/hooks/usePostFilters';
-import fetchPosts from '@/app/servises/posts/get-all';
-import { SearchPostParams } from '@/app/servises/posts/types';
+import fetchPosts from '@/app/servises/news/get-all';
+import { SearchPostParams } from '@/app/servises/news/types';
 
 const { Search } = Input;
 

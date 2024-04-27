@@ -28,7 +28,7 @@ export const ContentContainer = (props: Props) => {
     <AntdLayout
       ref={contentRef}
       className={styles.layoutContainer}
-      style={{ flexDirection: 'row', height: 'calc(100% - 64px)' }}
+      style={{ flexDirection: 'row' }}
     >
       {hasSidebar && (
         <div

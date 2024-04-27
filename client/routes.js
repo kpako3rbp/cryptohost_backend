@@ -19,6 +19,8 @@ export default {
   remove: (pathname, id) => [baseUrl, apiPath, pathname, 'remove-hard', id].join('/'),
   getAllPublic: (pathname) => [baseUrl, apiPath, pathname, 'public'].join('/'),
 
+  setMain: (pathname, id) => [baseUrl, apiPath, pathname, 'set-main', id].join('/'),
+
   // Common
   upload: (entityName) => [baseUrl, apiPath, 'upload', entityName].join('/'),
 };

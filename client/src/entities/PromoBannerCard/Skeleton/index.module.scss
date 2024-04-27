@@ -1,0 +1,116 @@
+.entityCard {
+  &Time {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  &Inner {
+    // width: 800px;
+    width: 80%;
+  }
+
+  &Content {
+    //display: flex;
+
+  }
+
+  &Title {
+    color: var(--black-color);
+
+    &:hover {
+      color: var(--purple-color);
+      // text-decoration: underline;
+    }
+  }
+
+  &Category {
+    border: 1px solid var(--red-color);
+  }
+
+  &Toggle {
+    width: fit-content;
+    margin-top: 20px;
+  }
+
+  &Cover {
+    width: 300px;
+    min-width: 300px;
+    max-height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 200px;
+    // padding-bottom: 25.25%;
+    background-color: #E8E8E8;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    /*div {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+*/
+    &:hover {
+      img {
+        scale: 1.05;
+      }
+    }
+  }
+
+  &Tools {
+    // width: 72px;
+  }
+}
+
+
+@media (max-width: 800px) {
+  .entityCard {
+    &Inner {
+      width: 100%;
+      // lex-wrap: wrap;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .entityCard {
+    &Cover {
+      width: 50%;
+      min-width: 50%;
+    }
+
+    &Inner {
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .entityCard {
+
+    &Cover {
+      width: 110px;
+      min-width: 110px;
+      max-height: 80px;
+      background-color: transparent;
+    }
+
+    &Inner {
+      flex-wrap: wrap;
+    }
+
+    &Info {
+      min-width: 100%;
+    }
+  }
+}
+

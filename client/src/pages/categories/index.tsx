@@ -8,10 +8,10 @@ import { getServerSession, Session } from 'next-auth';
 import { GetServerSidePropsContext } from 'next';
 import fetchCategories from '@/app/servises/categories/get-all';
 import CategoryCard from '@/entities/CategoryCard';
-import {Col, message, Row} from 'antd';
+import { Card, Col, Empty, message, Row } from 'antd';
 import { NewsCategory } from '@prisma/client';
-import fetchPosts from "@/app/servises/posts/get-all";
-import removeCategory from "@/app/servises/categories/remove";
+import fetchPosts from '@/app/servises/news/get-all';
+import removeCategory from '@/app/servises/categories/remove';
 
 type Props = {
   token: string;
@@ -62,31 +62,37 @@ const Categories = (props: Props) => {
         buttonText={'Создать'}
         buttonLink={'categories/add'}
       />
-      <Row gutter={[16, 16]} style={{paddingBottom: '40px'}}>
-        {currentCategories.map((category) => (
-          <Col
-            key={category.id}
-            xs={{ flex: '100%' }}
-            sm={{ flex: '100%' }}
-            md={{ flex: '50%' }}
-            lg={{ flex: '50%' }}
-            xl={{ flex: '50%' }}
-          >
-            <CategoryCard
+      {categories.length > 0 ? (
+        <Row gutter={[16, 16]}>
+          {currentCategories.map((category) => (
+            <Col
               key={category.id}
-              updateUrl={'categories/update'}
-              id={category.id}
-              name={category.name}
-              createdAt={category.created_at}
-              updatedAt={category.updated_at}
-              color={category.color}
-              postsCount={category.posts_count}
-              handleRemove={() => handleRemoveCategory(category.id)}
-              isLoading={isLoading}
-            />
-          </Col>
-        ))}
-      </Row>
+              xs={{ flex: '100%' }}
+              sm={{ flex: '100%' }}
+              md={{ flex: '50%' }}
+              lg={{ flex: '50%' }}
+              xl={{ flex: '50%' }}
+            >
+              <CategoryCard
+                key={category.id}
+                updateUrl={'categories/update'}
+                id={category.id}
+                name={category.name}
+                createdAt={category.created_at}
+                updatedAt={category.updated_at}
+                color={category.color}
+                postsCount={category.posts_count}
+                handleRemove={() => handleRemoveCategory(category.id)}
+                isLoading={isLoading}
+              />
+            </Col>
+          ))}
+        </Row>
+      ) : (
+        <Card style={{ marginTop: '10px' }}>
+          <Empty />
+        </Card>
+      )}
     </>
   );
 };

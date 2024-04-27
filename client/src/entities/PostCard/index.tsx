@@ -3,7 +3,8 @@ import { Card as AntdCard, Tag, theme, Flex, Typography } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
-  ExportOutlined, EyeOutlined,
+  ExportOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import CustomButton from '@/shared/ui/CustomButton';
@@ -12,10 +13,11 @@ import { NewsCategory, NewsPost } from '@prisma/client';
 import { baseUrl, extUrl } from '../../../routes';
 import { formatDateTime } from '@/shared/lib/format-date';
 import { useRouter } from 'next/router';
-const { Text } = Typography;
+
+const { Text, Title } = Typography;
 
 import styles from './index.module.scss';
-import PostCardSkeleton from "./Skeleton";
+import PostCardSkeleton from './Skeleton';
 
 type Props = {
   entityName: string;
@@ -47,7 +49,7 @@ const PostCard = (props: Props) => {
     hasTools = true,
     handleRemove,
     isLoading,
-    views
+    views,
   } = props;
   const {
     token: { colorTextTertiary, colorTextQuaternary, borderRadiusLG },
@@ -73,15 +75,18 @@ const PostCard = (props: Props) => {
       >
         <Flex gap="large" className={styles.entityCardInner}>
           {imageUrl && (
-            <div
+            <Link
+              href={`${updateUrl}/${id}`}
               className={styles.entityCardCover}
               style={{ borderRadius: borderRadiusLG }}
             >
-              <img src={`${baseUrl}/${imageUrl}`} alt={'cover'} />
-            </div>
+              <img src={`${baseUrl}/${imageUrl}`} alt={'cover'}/>
+            </Link>
           )}
           <Flex gap={1} vertical className={styles.entityCardInfo}>
-            <h2>{title}</h2>
+            <Link href={`${updateUrl}/${id}`} className={styles.entityCardTitle}>
+              <Title level={5}>{title}</Title>
+            </Link>
 
             <Flex>
               {category && (
@@ -93,7 +98,9 @@ const PostCard = (props: Props) => {
                 </Tag>
               )}
               <div>
-                 <Text type="secondary" style={{fontSize: 13}}><EyeOutlined /> {views}</Text>
+                <Text type="secondary" style={{ fontSize: 13 }}>
+                  <EyeOutlined /> {views}
+                </Text>
               </div>
             </Flex>
 
@@ -115,6 +122,7 @@ const PostCard = (props: Props) => {
             <Flex gap="small" wrap="wrap" className={styles.entityCardTools}>
               <Link href={`${updateUrl}/${id}`}>
                 <CustomButton
+                  loading={isLoading}
                   popover={'Редактировать'}
                   icon={<EditOutlined />}
                 />
@@ -124,12 +132,14 @@ const PostCard = (props: Props) => {
                 target="_blank"
               >
                 <CustomButton
+                  loading={isLoading}
                   popover={`Открыть на сайте: ${`${extUrl}${router.pathname}/${slug}`}`}
                   icon={<ExportOutlined />}
                 />
               </Link>
               {handleRemove && (
                 <CustomButton
+                  loading={isLoading}
                   // type="primary"
                   // popover={'Удалить'}
                   icon={<DeleteOutlined />}

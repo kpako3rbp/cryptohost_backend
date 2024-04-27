@@ -4,7 +4,7 @@ import { HomeOutlined } from '@ant-design/icons';
 import PageHeaderWithButton from '@/features/PageHeaderWithButton';
 import Head from 'next/head';
 // import { fetchPosts } from './api/posts/getAll';
-import fetchPosts from '@/app/servises/posts/get-all';
+import fetchPosts from '@/app/servises/news/get-all';
 import { NewsCategory, CryptoActivity } from '@prisma/client';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { getServerSession, Session } from 'next-auth';

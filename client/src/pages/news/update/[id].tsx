@@ -11,8 +11,8 @@ import { getServerSession, Session } from 'next-auth';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
 import fetchCategories from '@/app/servises/categories/get-all';
-import fetchPost from '@/app/servises/posts/get-one';
-import updatePost from '@/app/servises/posts/update';
+import fetchPost from '@/app/servises/news/get-one';
+import updatePost from '@/app/servises/news/update';
 
 const { Title } = Typography;
 
@@ -65,7 +65,6 @@ const UpdatePost = (props: Props) => {
       </Title>
       <NewsPostForm
         onFinish={handleUpdateNewsPost}
-        btnText="Редактировать новость"
         categories={categories}
         token={token}
         post={post}

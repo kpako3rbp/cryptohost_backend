@@ -14,7 +14,7 @@ const CardGrid = (props: Props) => {
   const { children } = props;
 
   return (
-    <Flex wrap="wrap" gap="small" style={{paddingBottom: '40px'}}>
+    <Flex wrap="wrap" gap="small">
       {children.map((child, index) => {
         const key = `col-${index}`;
         return (

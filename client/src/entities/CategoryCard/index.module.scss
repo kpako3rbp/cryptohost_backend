@@ -5,7 +5,7 @@
   }
 
   &Inner {
-   // width: 800px;
+    // width: 800px;
     width: 80%;
   }
 
@@ -14,7 +14,11 @@
 
   }
 
-
+  &Tag {
+    &:hover {
+      filter: saturate(50%) brightness(95%);
+    }
+  }
 
   &Category {
     border: 1px solid var(--red-color);

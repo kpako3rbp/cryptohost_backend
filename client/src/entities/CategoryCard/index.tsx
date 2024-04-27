@@ -50,16 +50,19 @@ const CategoryCard = (props: Props) => {
       >
         <Flex gap="large" className={styles.categoryCardInner}>
           <Flex gap={1} vertical className={styles.categoryCardInfo}>
-            <Tag
-              color={color}
-              style={{
-                padding: '6px 16px',
-                fontSize: 15,
-                width: 'fit-content',
-              }}
-            >
-              {name}
-            </Tag>
+            <Link href={`${updateUrl}/${id}`}>
+              <Tag
+                color={color}
+                style={{
+                  padding: '6px 16px',
+                  fontSize: 15,
+                  width: 'fit-content',
+                }}
+                className={styles.categoryCardTag}
+              >
+                {name}
+              </Tag>
+            </Link>
             <time
               className={styles.categoryCardTime}
               style={{ color: colorTextTertiary }}
@@ -77,10 +80,15 @@ const CategoryCard = (props: Props) => {
         <Flex gap="small" wrap="wrap" vertical>
           <Flex gap="small" wrap="wrap" className={styles.categoryCardTools}>
             <Link href={`${updateUrl}/${id}`}>
-              <CustomButton popover={'Редактировать'} icon={<EditOutlined />} />
+              <CustomButton
+                loading={isLoading}
+                popover={'Редактировать'}
+                icon={<EditOutlined />}
+              />
             </Link>
             {postsCount === 0 ? (
               <CustomButton
+                loading={isLoading}
                 icon={<DeleteOutlined />}
                 danger
                 confirm={{
@@ -91,6 +99,7 @@ const CategoryCard = (props: Props) => {
               />
             ) : (
               <CustomButton
+                loading={isLoading}
                 icon={<DeleteOutlined />}
                 disabled
                 danger

@@ -16,7 +16,13 @@ const __dirname = dirname(__filename);
  */
 export const getAll = async (req, res) => {
   try {
-    const { page = 1, pageSize = 10 } = req.query;
+    const {
+      page = 1,
+      pageSize = 10,
+      searchQuery = '', // 1. Добавление параметра поиска по заголовку
+      sortField = 'created_at', // Поле сортировки по умолчанию
+      sortOrder = 'desc',
+    } = req.query;
 
     const pageSizeInt = parseInt(pageSize, 10);
     const skip = (page - 1) * pageSizeInt;
@@ -24,6 +30,13 @@ export const getAll = async (req, res) => {
     const where = {
       deleted: false,
     };
+
+    // Добавляем поиск по заголовку
+    if (searchQuery) {
+      where.title = {
+        contains: searchQuery,
+      };
+    }
 
     const totalCount = await prisma.promoBanner.count({
       where,
@@ -33,9 +46,10 @@ export const getAll = async (req, res) => {
       where,
       skip,
       take: pageSizeInt,
-      orderBy: {
-        created_at: 'desc',
-      },
+      orderBy: [
+        { is_main: 'desc' }, // Первыми будут идти промо-баннеры с is_main равным true
+        { [sortField]: sortOrder },
+      ],
     });
 
     res.status(200).json({
@@ -317,13 +331,13 @@ export const hardRemove = async (req, res) => {
     }
 
     // Удаляем файл обложки
-    const imagePath = path.join(__dirname, '..', newsPost.image);
+    const imagePath = path.join(__dirname, '..', promoBanner.image);
     const imageThumbPath = path.join(
       __dirname,
       '..',
-      `${
-        promoBanner.image.split('.')[0]
-      }-thumb.${promoBanner.image.split('.').pop()}`
+      `${promoBanner.image.split('.')[0]}-thumb.${promoBanner.image
+        .split('.')
+        .pop()}`
     );
     deleteCoverImg(imagePath);
     deleteCoverImg(imageThumbPath);

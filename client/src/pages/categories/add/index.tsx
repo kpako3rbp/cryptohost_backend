@@ -3,15 +3,12 @@ import React, { useState } from 'react';
 import { HomeOutlined } from '@ant-design/icons';
 import Head from 'next/head';
 import { NewsCategory, NewsPost } from '@prisma/client';
-import NewsPostForm from '@/features/NewsPostForm';
 import Breadcrumbs from '@/features/Breadcrumb';
 import { Typography } from 'antd';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSession, Session } from 'next-auth';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
-import fetchCategories from "@/app/servises/categories/get-all";
-import addPost from "@/app/servises/posts/add";
 import addCategory from "@/app/servises/categories/add";
 import NewsCategoryForm from "@/features/NewsCategoryForm";
 

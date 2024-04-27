@@ -32,7 +32,6 @@ import dayjs from 'dayjs';
 
 type Props = {
   onFinish: (values: NewsPost) => void;
-  btnText: string;
   title?: string;
   error?: string;
   post?: NewsPost;
@@ -42,7 +41,7 @@ type Props = {
 };
 
 const NewsPostForm = (props: Props) => {
-  const { onFinish, title, btnText, post, categories, token, loading } = props;
+  const { onFinish, title, post, categories, token, loading } = props;
   const {
     token: { borderRadiusLG, colorBorder, colorTextDescription },
   } = theme.useToken();
@@ -275,13 +274,13 @@ const NewsPostForm = (props: Props) => {
                 width: '100%',
                 borderRadius: borderRadiusLG,
               }}
-              defaultValue={dayjs(post?.published_at) || ''}
+              defaultValue={post?.published_at ? dayjs(post?.published_at) : null}
             />
           </Form.Item>
         </div>
 
         <Button loading={loading} type="primary" size="large" htmlType="submit">
-          {btnText}
+          Сохранить
         </Button>
       </Form>
 

@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { SearchPostParams } from '@/app/servises/posts/types';
+import { SearchPostParams } from '@/app/servises/news/types';
 
 type FiltersContextType = {
   filters: SearchPostParams;

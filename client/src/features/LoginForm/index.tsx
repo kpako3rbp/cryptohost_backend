@@ -63,16 +63,10 @@ const LoginForm = () => {
     }
   };
 
-  if (loading && session && status === 'authenticated') {
-    return <Spin size="large" fullscreen />;
-  }
-
   // Если пользователь уже аутентифицирован, перенаправляем его на главную страницу
   if (session && status === 'authenticated') {
-    // console.log('user', session, 'status', status);
-
     router.push('/news');
-    return <Spin size="large" fullscreen />;
+    return;
   }
 
   return (
@@ -112,7 +106,7 @@ const LoginForm = () => {
         >
           <Input.Password placeholder="Пароль" size="large" />
         </Form.Item>
-        <Button type="primary" size="large" htmlType="submit">
+        <Button type="primary" size="large" htmlType="submit" loading={loading}>
           Войти
         </Button>
       </Form>

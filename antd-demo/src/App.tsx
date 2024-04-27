@@ -18,7 +18,6 @@ const App: React.FC = () => {
   } = theme.useToken();
 
   return (
-    // 100vh?
     <Layout>
       <Sider
         breakpoint="lg"

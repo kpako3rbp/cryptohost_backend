@@ -14,7 +14,14 @@
 
   }
 
+  &Title {
+    color: var(--black-color);
 
+    &:hover {
+      color: var(--purple-color);
+      // text-decoration: underline;
+    }
+  }
 
   &Category {
     border: 1px solid var(--red-color);
@@ -36,6 +43,13 @@
       height: 100%;
       width: 100%;
       object-fit: cover;
+      transition: var(--transition);
+    }
+
+    &:hover {
+      img {
+        scale: 1.05;
+      }
     }
   }
 

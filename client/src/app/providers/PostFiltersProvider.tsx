@@ -1,4 +1,4 @@
-import { SearchPostParams } from '../servises/posts/types';
+import { SearchPostParams } from '../servises/news/types';
 import { useState } from 'react';
 import PostFiltersContext from '@/shared/context/postFiltersContext';
 

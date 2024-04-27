@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import {CryptoActivity, NewsCategory, NewsPost} from '@prisma/client';
 import { Card, Empty, message, Pagination } from 'antd';
 import CardGrid from '@/shared/ui/CardGrid';
-import fetchPosts from '@/app/servises/posts/get-all';
+import fetchPosts from '@/app/servises/news/get-all';
 import usePostFilters from '@/shared/hooks/usePostFilters';
-import FilterPosts from '@/features/FilterPosts';
 import PostCard from '@/entities/PostCard';
-import removePost from '@/app/servises/posts/remove';
+import removePost from '@/app/servises/news/remove';
 import FilterPostsPanel from "@/features/FilterPostsPanel";
-import {SearchPostParams} from "@/app/servises/posts/types";
+import {SearchPostParams} from "@/app/servises/news/types";
 import fetchActivities from "@/app/servises/activities/get-all";
 
 type NewsFeedProps = {

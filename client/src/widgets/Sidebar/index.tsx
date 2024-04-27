@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  ApartmentOutlined,
+  ApartmentOutlined, DesktopOutlined, FileImageOutlined,
   GiftOutlined, PicLeftOutlined,
   PicRightOutlined,
   PictureOutlined,
@@ -11,7 +11,7 @@ import styles from './index.module.scss';
 import cl from 'classnames';
 import { useRouter } from 'next/router';
 
-import routes from '../../../routes.js';
+import routes, {extUrl} from '../../../routes.js';
 
 const { Sider } = Layout;
 
@@ -46,7 +46,7 @@ const Sidebar = (props: Props) => {
     },
     {
       key: '/promo-banners',
-      icon: <PicLeftOutlined />,
+      icon: <FileImageOutlined />,
       label: <Link href={'/promo-banners'}>Промо-баннеры</Link>,
       onClick: collapseSidebarOnMobileDevices,
     },
@@ -54,6 +54,13 @@ const Sidebar = (props: Props) => {
       key: '/activities',
       icon: <GiftOutlined />,
       label: <Link href={'/activities'}>Активности</Link>,
+      onClick: collapseSidebarOnMobileDevices,
+    },
+    { type: 'divider' },
+    {
+      key: extUrl,
+      icon: <DesktopOutlined />,
+      label: <Link href={extUrl} target="_blank">На сайт →</Link>,
       onClick: collapseSidebarOnMobileDevices,
     },
   ];

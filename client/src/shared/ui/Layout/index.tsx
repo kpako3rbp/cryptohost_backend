@@ -7,7 +7,7 @@ import Header from '../../../widgets/Header';
 import Sidebar from '../../../widgets/Sidebar';
 import cl from 'classnames';
 import {useRouter} from "next/router";
-import ContentContainer from "@/widgets/ContentContainer";
+import ContentContainer from "@/shared/ui/ContentContainer";
 
 const { Content } = AntdLayout;
 
@@ -20,8 +20,6 @@ const Layout = (props: Props) => {
   const { children, hasSidebar = true } = props;
 
   const [collapsed, setCollapsed] = useState(false);
-  const [height, setHeight] = useState(800);
-
 
   useEffect(() => {
     if (!hasSidebar) {
@@ -33,20 +31,6 @@ const Layout = (props: Props) => {
     window.scrollTo(0, 500);
   }, []);
 
-  useEffect(() => {
-    setHeight(window.innerHeight);
-
-    const handleResize = () => {
-      // console.log('window.innerHeight', window.innerHeight)
-      setHeight(window.innerHeight);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   const toggleCollapsed = () => {
     const newCollapsed = !collapsed;
@@ -57,10 +41,7 @@ const Layout = (props: Props) => {
   return (
     <AntdLayout
       style={{
-        height,
-        minHeight: height,
-        maxHeight: height,
-        overflow: 'hidden',
+        minHeight: '100vh',
         position: 'relative',
       }}
       className={styles.layout}

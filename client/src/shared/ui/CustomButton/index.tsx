@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { DeleteOutlined } from '@ant-design/icons';
 
 type Props = {
+  loading: boolean;
   popover?: string | undefined;
   type?: 'link' | 'text' | 'default' | 'primary' | 'dashed' | undefined;
   danger?: boolean | undefined;
@@ -21,7 +22,7 @@ type Props = {
 };
 
 const CustomButton = (props: Props) => {
-  const { popover, type, onClick, icon = false, danger, confirm, disabled } = props;
+  const { loading, popover, type, onClick, icon = false, danger, confirm, disabled } = props;
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -62,6 +63,7 @@ const CustomButton = (props: Props) => {
         {popover ? (
           <Popover content={popover}>
             <Button
+               loading={loading}
               type={type}
               onClick={showPopconfirm}
               icon={icon}
@@ -70,6 +72,7 @@ const CustomButton = (props: Props) => {
           </Popover>
         ) : (
           <Button
+             loading={loading}
             type={type}
             onClick={showPopconfirm}
             icon={icon}
@@ -83,10 +86,10 @@ const CustomButton = (props: Props) => {
 
   return popover ? (
     <Popover content={popover}>
-      <Button type={type} onClick={onClick} icon={icon} danger={danger} disabled={disabled}/>
+      <Button loading={loading} type={type} onClick={onClick} icon={icon} danger={danger} disabled={disabled}/>
     </Popover>
   ) : (
-    <Button type={type} onClick={onClick} icon={icon} danger={danger} disabled={disabled}/>
+    <Button loading={loading} type={type} onClick={onClick} icon={icon} danger={danger} disabled={disabled}/>
   );
 };
 

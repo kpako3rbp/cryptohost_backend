@@ -118,6 +118,7 @@ const Header = (props: Props) => {
                 <div>{session.user.login}</div>
               </Flex>
               <CustomButton
+                loading={loading}
                 onClick={onLogoutClick}
                 popover="Выйти"
                 danger

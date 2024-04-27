@@ -17,7 +17,7 @@ import ErrorMessage from '@/shared/ui/ErrorMessage';
 import { NewsCategory, NewsPost } from '@prisma/client';
 import {
   AlignLeftOutlined,
-  ApartmentOutlined,
+  ApartmentOutlined, BgColorsOutlined,
   CalendarOutlined,
   FontColorsOutlined,
   PictureOutlined,
@@ -48,8 +48,6 @@ const NewsCategoryForm = (props: Props) => {
   const [error, setError] = useState('');
   const [text, setText] = useState('');
   const inputRef = useRef<InputRef>(null);
-
-  const tagsData = ['Movies', 'Books', 'Music', 'Sports'];
 
   return (
     <Card title="Категория" style={{ borderColor: colorBorder }}>
@@ -99,7 +97,7 @@ const NewsCategoryForm = (props: Props) => {
 
         <div style={{ marginTop: 40 }}>
           <Title style={{ marginBottom: '0' }} level={5}>
-            <ApartmentOutlined /> Цвет плашки
+            <BgColorsOutlined /> Цвет плашки
           </Title>
           <Text type="secondary">
             Для удобства и красоты, чтобы новости было легче различать в
@@ -132,7 +130,7 @@ const NewsCategoryForm = (props: Props) => {
         </div>
 
         <Button loading={loading} type="primary" size="large" htmlType="submit" style={{marginTop: 20}}>
-          Добавить категорию
+          Сохранить
         </Button>
       </Form>
 
