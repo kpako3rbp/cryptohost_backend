@@ -1,8 +1,8 @@
 // export const baseUrl = 'http://192.168.1.56:8000'; // TODO поменять URL
-// export const baseUrl = process.env.API_URL || 'http://95.181.226.159:8000';
+export const baseUrl = process.env.API_URL || 'http://95.181.226.159:8000';
 // export const baseUrl = 'http://192.168.1.56:8000';
 
-export const baseUrl = process.env.API_URL;
+// export const baseUrl = process.env.API_URL;
 
 // export const baseUrl = 'http://192.168.1.56:8000';
 // export const baseUrl = 'http://95.181.226.159:8000';
