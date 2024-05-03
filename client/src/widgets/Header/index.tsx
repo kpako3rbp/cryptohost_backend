@@ -71,7 +71,8 @@ const Header = (props: Props) => {
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
-          height: 64
+          height: 64,
+          zIndex: 9,
         }}
       >
         <Logo />
