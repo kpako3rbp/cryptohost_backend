@@ -136,6 +136,7 @@ const ActivitiesForm = (props: Props) => {
             ]}
           >
             <ImageDragger
+              entityName={'crypto-activities'}
               token={token}
               form={form}
               style={{ marginTop: '10px' }}

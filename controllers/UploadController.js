@@ -11,8 +11,8 @@ export const uploadImage = async (req, res) => {
   try {
     // Получаем требуемую ширину изображения из запроса клиента
     const { imageWidth, thumbWidth } = req.query;
-    const desiredImageWidth = imageWidth ? parseInt(imageWidth) : 1920;
-    const desiredThumbWidth = thumbWidth ? parseInt(thumbWidth) : 600;
+    const desiredImageWidth = imageWidth ? parseInt(imageWidth) : 800;
+    const desiredThumbWidth = thumbWidth ? parseInt(thumbWidth) : 400;
 
     // Формируем пути для сохранения изображений
     const imagePath = `${req.file.destination}/${req.file.filename}`;
@@ -23,6 +23,9 @@ export const uploadImage = async (req, res) => {
     // Открываем изображение с помощью Jimp
     const image = await Jimp.read(imagePath);
 
+    // Сжимаем изображение с заданным качеством (от 0 до 100)
+    await image.quality(60); // Примерно 80% качества
+
     // Изменяем размер изображения по ширине с сохранением пропорций
     await image.resize(desiredImageWidth, Jimp.AUTO);
 
@@ -30,12 +33,13 @@ export const uploadImage = async (req, res) => {
     await image.writeAsync(imagePath);
 
     // Создаем миниатюру изображения с шириной 600 пикселей
-    const thumbnail = image.clone(); // Клонируем изображение для миниатюры
-    await thumbnail.resize(desiredThumbWidth, Jimp.AUTO); // Изменяем размер для миниатюры
-    await thumbnail.writeAsync(thumbnailPath); // Сохраняем миниатюру
+    // const thumbnail = image.clone(); // Клонируем изображение для миниатюры
+    // await thumbnail.resize(desiredThumbWidth, Jimp.AUTO); // Изменяем размер для миниатюры
+    // await thumbnail.writeAsync(thumbnailPath); // Сохраняем миниатюру
 
     // Отправляем URL в ответе
-    res.status(201).json({ imageUrl: imagePath, thumbnailUrl: thumbnailPath });
+    // res.status(201).json({ imageUrl: imagePath, thumbnailUrl: thumbnailPath });
+    res.status(201).json({ imageUrl: imagePath });
   } catch (error) {
     return res.status(500).json({
       message: `Ошибка при загрузке изображения: ${error}`,

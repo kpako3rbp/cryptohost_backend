@@ -9,6 +9,7 @@ import removePost from '@/app/servises/news/remove';
 import FilterPostsPanel from "@/features/FilterPostsPanel";
 import {SearchPostParams} from "@/app/servises/news/types";
 import fetchActivities from "@/app/servises/activities/get-all";
+import removeActivity from "@/app/servises/activities/remove";
 
 type NewsFeedProps = {
   posts: CryptoActivity[];
@@ -30,7 +31,7 @@ const ActivitiesFeed = (props: NewsFeedProps) => {
     setIsLoading(true);
 
     try {
-      const data = await fetchPosts(token, { ...filters, page, pageSize });
+      const data = await fetchActivities(token, { ...filters, page, pageSize });
 
       // console.log('data', data)
       setFilters({ ...filters, page, pageSize });
@@ -49,8 +50,8 @@ const ActivitiesFeed = (props: NewsFeedProps) => {
   const handleRemovePost = async (id: string) => {
     setIsLoading(true);
     try {
-      await removePost(token, id);
-      const data = await fetchPosts(token);
+      await removeActivity(token, id);
+      const data = await fetchActivities(token);
 
       setCurrentPosts(data.activities);
       setCurrentTotal(data.total);

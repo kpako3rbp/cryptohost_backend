@@ -5,13 +5,14 @@ import {
   PicRightOutlined,
   PictureOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import {Layout, Menu, MenuProps} from 'antd';
 import Link from 'next/link';
 import styles from './index.module.scss';
 import cl from 'classnames';
 import { useRouter } from 'next/router';
 
 import routes, {extUrl} from '../../../routes.js';
+import {ItemType} from "rc-collapse/es/interface";
 
 const { Sider } = Layout;
 
@@ -19,6 +20,8 @@ type Props = {
   collapsed: boolean;
   setCollapsed: (state: boolean) => void;
 };
+
+type MenuItem = Required<MenuProps>['items'][number];
 
 const Sidebar = (props: Props) => {
   const router = useRouter();
@@ -31,7 +34,7 @@ const Sidebar = (props: Props) => {
     }
   }
 
-  const items = [
+  const items: MenuItem[] = [
     {
       key: '/news',
       icon: <PicRightOutlined />,

@@ -9,7 +9,8 @@ const router = express.Router();
 
 // Public routes
 router.get('/public', NewsPostsController.getAll);
-router.get('/public/:id', NewsPostsController.getOne);
+router.get('/public/:slug', NewsPostsController.getOne);
+router.get('/paths/public', NewsPostsController.getPaths);
 
 // Admin routes
 router.get('/', authAdmin, NewsPostsController.getAll);

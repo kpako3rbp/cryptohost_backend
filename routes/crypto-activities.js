@@ -1,5 +1,5 @@
 import express from 'express';
-import { CryptoActivitiesController } from '../controllers/index.js';
+import {CryptoActivitiesController, NewsPostsController} from '../controllers/index.js';
 import { authAdmin } from '../middleware/auth.js';
 import handleValidationErrors from '../middleware/handle-validation-errors.js';
 
@@ -9,7 +9,8 @@ const router = express.Router();
 
 // Public routes
 router.get('/public', CryptoActivitiesController.getAll);
-router.get('/public/:id', CryptoActivitiesController.getOne);
+router.get('/public/:slug', CryptoActivitiesController.getOne);
+router.get('/paths/public', CryptoActivitiesController.getPaths);
 
 // Admin routes
 router.get('/', authAdmin, CryptoActivitiesController.getAll);

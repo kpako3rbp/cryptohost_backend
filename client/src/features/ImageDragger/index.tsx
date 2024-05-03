@@ -6,6 +6,7 @@ import routes, { baseUrl } from '../../../routes';
 const { Dragger } = Upload;
 
 type Props = {
+  entityName: string;
   token: string;
   form: FormInstance;
   style: React.CSSProperties;
@@ -13,7 +14,7 @@ type Props = {
 };
 
 const ImageDragger = (props: Props) => {
-  const { token, form, style, imageUrl } = props;
+  const { entityName, token, form, style, imageUrl } = props;
 
   let defaultFileList: UploadFile[] | null = [];
   if (imageUrl) {
@@ -33,7 +34,7 @@ const ImageDragger = (props: Props) => {
   const uploadProps: UploadProps = {
     name: 'image',
     defaultFileList,
-    action: routes.upload('news-posts'),
+    action: routes.upload(entityName),
     listType: 'picture',
     maxCount: 1,
     headers: {

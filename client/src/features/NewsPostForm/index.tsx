@@ -144,6 +144,7 @@ const NewsPostForm = (props: Props) => {
             ]}
           >
             <ImageDragger
+              entityName={'news-posts'}
               token={token}
               form={form}
               style={{ marginTop: '10px' }}

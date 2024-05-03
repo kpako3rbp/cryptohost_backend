@@ -66,7 +66,7 @@ const LoginForm = () => {
   // Если пользователь уже аутентифицирован, перенаправляем его на главную страницу
   if (session && status === 'authenticated') {
     router.push('/news');
-    return;
+    return <></>;
   }
 
   return (

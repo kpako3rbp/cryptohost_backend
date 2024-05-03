@@ -70,7 +70,7 @@ model NewsPost {
   published_at DateTime
   image        String
   slug         String       @unique
-  body         String
+  body         String       @db.Text
   updated      Boolean      @default(false)
   updated_at   DateTime?
   updated_by   String       @default("")
@@ -87,7 +87,7 @@ model CryptoActivity {
   published_at DateTime
   image        String
   slug         String    @unique
-  body         String
+  body         String    @db.Text
   updated      Boolean   @default(false)
   updated_at   DateTime?
   updated_by   String    @default("")

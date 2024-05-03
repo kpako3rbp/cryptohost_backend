@@ -9,7 +9,7 @@ const router = express.Router();
 // Public routes
 router.get('/public', PromoBannerController.getAll);
 router.get('/public/:id', PromoBannerController.getOne);
-router.get('/main', PromoBannerController.getMain);
+router.get('/main/public', PromoBannerController.getMain);
 
 // Admin routes
 router.get('/', authAdmin, PromoBannerController.getAll);

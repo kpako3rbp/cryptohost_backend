@@ -11,6 +11,37 @@ const __dirname = dirname(__filename);
 
 /**
  *
+ @route GET /api/news-posts/paths
+ @desc Получение всех путей
+ @access Public
+ */
+export const getPaths = async (req, res) => {
+  try {
+    const newsPosts = await prisma.newsPost.findMany({
+      select: {
+        slug: true,
+      },
+    });
+
+    // Преобразуем полученные слаги в массив объектов с параметром slug для каждого пути
+    const paths = newsPosts.map((post) => ({
+      params: {
+        slug: post.slug,
+      },
+    }));
+
+    return res.status(200).json(paths);
+  } catch (error) {
+    return res.status(400).json({
+      message: `Не удалось получить пути новостей: ${error}`,
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+/**
+ *
  @route GET /api/news-posts/
  @desc Получение всех новостей
  @access Public or Private
@@ -23,7 +54,7 @@ export const getAll = async (req, res) => {
       categoryIds = '[]',
       excludeIds = '[]',
       searchQuery = '', // 1. Добавление параметра поиска по заголовку
-      sortField = 'created_at', // Поле сортировки по умолчанию
+      sortField = 'published_at', // Поле сортировки по умолчанию
       sortOrder = 'desc', // Направление сортировки по умолчанию
     } = req.query;
 
@@ -34,9 +65,15 @@ export const getAll = async (req, res) => {
       deleted: false,
     };
 
+    // Делаем это для того, чтобы total не реагировал исключенные посты
+    const totalCountWhere = { ...where };
+
     // Добавляем фильтрацию по категориям, если categoryIds указаны
     if (JSON.parse(categoryIds).length > 0) {
       where.category_id = {
+        in: JSON.parse(categoryIds),
+      };
+      totalCountWhere.category_id = {
         in: JSON.parse(categoryIds),
       };
     }
@@ -55,10 +92,13 @@ export const getAll = async (req, res) => {
         contains: searchQuery,
         // mode: 'insensitive', // Регистронезависимый поиск
       };
+      totalCountWhere.title = {
+        contains: searchQuery,
+      };
     }
 
     const totalCount = await prisma.newsPost.count({
-      where,
+      where: totalCountWhere,
     });
 
     const newsPosts = await prisma.newsPost.findMany({
@@ -68,9 +108,9 @@ export const getAll = async (req, res) => {
       orderBy: {
         [sortField]: sortOrder, // 2. Добавление сортировки по выбранному полю и направлению
       },
-/*      include: {
-        category: true,
-      },*/
+      /*      include: {
+              category: true,
+            },*/
       // Отдаем только те поля, который нужны
       select: {
         id: true,
@@ -90,7 +130,7 @@ export const getAll = async (req, res) => {
     // Проход по каждой статье и создание поля description
     // Очищается разметка Markdown и отдается только заданное количество символов.
     newsPosts.forEach((post) => {
-      post.description = `${getPreviewFromBody(post.body, 100)} ...`;
+      post.description = `${getPreviewFromBody(post.body, 400)} ...`;
       delete post.body;
     });
 
@@ -115,27 +155,74 @@ export const getAll = async (req, res) => {
  */
 export const getOne = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id, slug } = req.params;
 
-    const newsPost = await prisma.newsPost.findUnique({
+    console.log('req.paramsreq.paramsreq.paramsreq.params', req.params);
+
+    let newsPost;
+
+    if (id) {
+      newsPost = await prisma.newsPost.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          category: true,
+        },
+      });
+    } else if (slug) {
+      newsPost = await prisma.newsPost.findUnique({
+        where: {
+          slug,
+        },
+        include: {
+          category: true,
+        },
+      });
+    }
+
+    /*const newsPost = await prisma.newsPost.findUnique({
       where: {
         id,
       },
-    });
+    });*/
 
     if (!newsPost) {
       return res.status(404).json({ message: 'Новость не найдена' });
     }
 
+    // // Увеличение счетчика просмотров на 1
+    // await prisma.newsPost.update({
+    //   where: { id },
+    //   data: {
+    //     views: {
+    //       increment: 1,
+    //     },
+    //   },
+    // });
+
     // Увеличение счетчика просмотров на 1
-    await prisma.newsPost.update({
-      where: { id },
-      data: {
-        views: {
-          increment: 1,
+    if (id) {
+      await prisma.newsPost.update({
+        where: { id },
+        data: {
+          views: {
+            increment: 1,
+          },
         },
-      },
-    });
+      });
+    } else if (slug) {
+      await prisma.newsPost.update({
+        where: { slug },
+        data: {
+          views: {
+            increment: 1,
+          },
+        },
+      });
+    }
+
+    newsPost.description = `${getPreviewFromBody(newsPost.body, 400)} ...`;
 
     return res.status(200).json(newsPost);
   } catch (error) {
@@ -236,7 +323,7 @@ export const update = async (req, res) => {
       },
     });
 
-    if (newsPostWithSameSlug) {
+    if (newsPostWithSameSlug && newsPostWithSameSlug.id !== id) {
       // Если новость с таким слагом уже есть, то добавляем в конце сегодняшнюю дату
       currentSlug = `${currentSlug}-${Date.now()}`;
     }
@@ -250,7 +337,6 @@ export const update = async (req, res) => {
         category_id: true,
       },
     });
-
 
     // Если категория изменена, увеличение счетчика в новой категории
     if (currentNewsPost.category_id !== newCategoryId) {
@@ -286,6 +372,7 @@ export const update = async (req, res) => {
       data: {
         meta_title: data.metaTitle || data.title,
         title: data.title,
+        published_at: data.publishedAt,
         category_id: data.categoryId,
         image: data.image,
         slug: currentSlug,
@@ -406,9 +493,7 @@ export const hardRemove = async (req, res) => {
     const imageThumbPath = path.join(
       __dirname,
       '..',
-      `${
-        newsPost.image.split('.')[0]
-      }-thumb.${newsPost.image.split('.').pop()}`
+      `${newsPost.image.split('.')[0]}-thumb.${newsPost.image.split('.').pop()}`
     );
     deleteCoverImg(imagePath);
     deleteCoverImg(imageThumbPath);

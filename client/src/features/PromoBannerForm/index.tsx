@@ -124,6 +124,7 @@ const PromoBannerForm = (props: Props) => {
             ]}
           >
             <ImageDragger
+              entityName={'promo-banners'}
               token={token}
               form={form}
               style={{ marginTop: '10px' }}

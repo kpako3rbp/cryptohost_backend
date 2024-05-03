@@ -11,6 +11,37 @@ const __dirname = dirname(__filename);
 
 /**
  *
+ @route GET /api/crypto-activities/paths
+ @desc Получение всех путей
+ @access Public
+ */
+export const getPaths = async (req, res) => {
+  try {
+    const cryptoActivities = await prisma.cryptoActivity.findMany({
+      select: {
+        slug: true,
+      },
+    });
+
+    // Преобразуем полученные слаги в массив объектов с параметром slug для каждого пути
+    const paths = cryptoActivities.map((post) => ({
+      params: {
+        slug: post.slug,
+      },
+    }));
+
+    return res.status(200).json(paths);
+  } catch (error) {
+    return res.status(400).json({
+      message: `Не удалось получить пути криптоактивностей: ${error}`,
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+/**
+ *
  @route GET /api/crypto-activities/
  @desc Получение всех криптоактивностей
  @access Public or Private
@@ -20,6 +51,7 @@ export const getAll = async (req, res) => {
     const {
       page = 1,
       pageSize = 10,
+      excludeIds = '[]',
       searchQuery = '', // 1. Добавление параметра поиска по заголовку
       sortField = 'created_at', // Поле сортировки по умолчанию
       sortOrder = 'desc', // Направление сортировки по умолчанию
@@ -32,16 +64,31 @@ export const getAll = async (req, res) => {
       deleted: false,
     };
 
+    // Делаем это для того, чтобы total не реагировал исключенные посты
+    const totalCountWhere = { ...where };
+
+    // Добавляем исключение постов, если excludeIds указаны
+    if (JSON.parse(excludeIds).length > 0) {
+      where.NOT = {
+        id: {
+          in: JSON.parse(excludeIds),
+        },
+      };
+    }
+
     // Добавляем поиск по заголовку
     if (searchQuery) {
       where.title = {
         contains: searchQuery,
         // mode: 'insensitive', // Регистронезависимый поиск
       };
+      totalCountWhere.title = {
+        contains: searchQuery,
+      };
     }
 
     const totalCount = await prisma.cryptoActivity.count({
-      where,
+      where: totalCountWhere,
     });
 
     const cryptoActivityPosts = await prisma.cryptoActivity.findMany({
@@ -92,27 +139,54 @@ export const getAll = async (req, res) => {
  */
 export const getOne = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id, slug } = req.params;
 
-    const cryptoActivityPost = await prisma.cryptoActivity.findUnique({
-      where: {
-        id,
-      },
-    });
+    let cryptoActivityPost;
+
+    if (id) {
+      cryptoActivityPost = await prisma.cryptoActivity.findUnique({
+        where: {
+          id,
+        },
+      });
+    } else if (slug) {
+      cryptoActivityPost = await prisma.cryptoActivity.findUnique({
+        where: {
+          slug,
+        },
+      });
+    }
+
+    // const cryptoActivityPost = await prisma.cryptoActivity.findUnique({
+    //   where: {
+    //     id,
+    //   },
+    // });
 
     if (!cryptoActivityPost) {
       return res.status(404).json({ message: 'Криптоактивность не найдена' });
     }
 
     // Увеличение счетчика просмотров на 1
-    await prisma.cryptoActivity.update({
-      where: { id },
-      data: {
-        views: {
-          increment: 1,
+    if (id) {
+      await prisma.cryptoActivity.update({
+        where: { id },
+        data: {
+          views: {
+            increment: 1,
+          },
         },
-      },
-    });
+      });
+    } else if (slug) {
+      await prisma.cryptoActivity.update({
+        where: { slug },
+        data: {
+          views: {
+            increment: 1,
+          },
+        },
+      });
+    }
 
     return res.status(200).json(cryptoActivityPost);
   } catch (error) {
@@ -196,7 +270,7 @@ export const update = async (req, res) => {
       },
     });
 
-    if (cryptoActivityPostWithSameSlug) {
+    if (cryptoActivityPostWithSameSlug  && cryptoActivityPostWithSameSlug.id !== id) {
       // Если новость с таким слагом уже есть, то добавляем в конце сегодняшнюю дату
       currentSlug = `${currentSlug}-${Date.now()}`;
     }
@@ -210,6 +284,7 @@ export const update = async (req, res) => {
         meta_title: data.metaTitle || data.title,
         title: data.title,
         image: data.image,
+        published_at: data.publishedAt,
         slug: currentSlug,
         body: data.body,
         updated: true,
