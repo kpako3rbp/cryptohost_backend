@@ -64,18 +64,18 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      console.log('url:', url);
-      console.log('baseUrl:', baseUrl);
+      // console.log('url:', url);
+      // console.log('baseUrl:', baseUrl);
 
       // Allows relative callback URLs
       if (url.startsWith('/')) {
-        console.log('Redirecting to:', `${baseUrl}${url}`);
+        // console.log('Redirecting to:', `${baseUrl}${url}`);
         return `${baseUrl}${url}`;
       } else if (new URL(url).origin === baseUrl) {
-        console.log('Redirecting to:', url);
+        // console.log('Redirecting to:', url);
         return url;
       }
-      console.log('Redirecting to baseUrl:', baseUrl);
+      // console.log('Redirecting to baseUrl:', baseUrl);
       return baseUrl;
     },
   },
