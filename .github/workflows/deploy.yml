@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies and build
+        run: |
+          sshpass -p 'in9CGqko3L' ssh -o StrictHostKeyChecking=no root@95.181.226.159 '
+          cd cryptohost/cryptohost_backend && git pull &&
+          cd cryptohost/cryptohost_backend/client && npm run build'
+
+      - name: Restart PM2
+        run: |
+          sshpass -p 'in9CGqko3L' ssh -o StrictHostKeyChecking=no root@95.181.226.159 '
+          pm2 restart all'
