@@ -65,7 +65,6 @@ export const authOptions: NextAuthOptions = {
     },
     async redirect({ url, baseUrl }) {
       // console.log('url:', url);
-      // console.log('baseUrl:', baseUrl);
 
       // Allows relative callback URLs
       if (url.startsWith('/')) {
