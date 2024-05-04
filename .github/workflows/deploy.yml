@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to VPS
 
 on:
   push:
@@ -13,13 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies and build
-        run: |
-          sshpass -p 'in9CGqko3L' ssh -o StrictHostKeyChecking=no root@95.181.226.159 '
-          cd cryptohost/cryptohost_backend && git pull &&
-          cd cryptohost/cryptohost_backend/client && npm run build'
-
-      - name: Restart PM2
-        run: |
-          sshpass -p 'in9CGqko3L' ssh -o StrictHostKeyChecking=no root@95.181.226.159 '
-          pm2 restart all'
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: 22
+          script: |
+            cd cryptohost/cryptohost_backend
+            git pull
+            cd ../client
+            npm run build
+            pm2 restart all

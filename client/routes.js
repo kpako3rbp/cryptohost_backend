@@ -1,24 +1,9 @@
 import 'dotenv/config';
 
-// export const baseUrl = 'http://192.168.1.56:8000'; // TODO поменять URL
-// export const baseUrl = process.env.SERVER_URL || 'http://95.181.226.159:8000';
-
-
 export const baseUrl = process.env.SERVER_URL;
 export const clientDomain = process.env.CLIENT_DOMAIN;
-
-console.log('process.env.SERVER_URL', process.env.SERVER_URL)
-
-
-// export const baseUrl = 'http://192.168.1.56:8000';
-
-// export const baseUrl = process.env.API_URL;
-
-// export const baseUrl = 'http://192.168.1.56:8000';
-// export const baseUrl = 'http://95.181.226.159:8000';
 export const extUrl = 'https://cryptohost.vercel.app'; // TODO поменять URL
 
-// export const baseUrl = 'http://192.168.1.56:8000';
 const apiPath = 'api';
 
 export default {
