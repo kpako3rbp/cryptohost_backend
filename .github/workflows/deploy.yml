@@ -24,6 +24,4 @@ jobs:
             cd cryptohost/cryptohost_backend
             git pull
             cd client
-            npm run build
-            while pgrep -f "npm run build"; do sleep 1; done
-            pm2 restart all
+            npm run build || (npm run build && pm2 restart all)
