@@ -23,7 +23,6 @@ jobs:
           script: |
             cd cryptohost/cryptohost_backend
             git pull
-            cd ../client
+            cd client
             npm run build
-            while pgrep -f "npm run build"; do sleep 1; done
             pm2 restart all
