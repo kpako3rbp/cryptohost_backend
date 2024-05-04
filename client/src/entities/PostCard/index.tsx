@@ -10,7 +10,7 @@ import Link from 'next/link';
 import CustomButton from '@/shared/ui/CustomButton';
 
 import { NewsCategory, NewsPost } from '@prisma/client';
-import { baseUrl, extUrl } from '../../../routes';
+import {baseUrl, clientDomain, extUrl} from '../../../routes';
 import { formatDateTime } from '@/shared/lib/format-date';
 import { useRouter } from 'next/router';
 
@@ -80,7 +80,7 @@ const PostCard = (props: Props) => {
               className={styles.entityCardCover}
               style={{ borderRadius: borderRadiusLG }}
             >
-              <img src={`${baseUrl}/${imageUrl}`} alt={'cover'}/>
+              <img src={`${clientDomain}/${imageUrl}`} alt={'cover'}/>
             </Link>
           )}
           <Flex gap={1} vertical className={styles.entityCardInfo}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormInstance, message, Upload, UploadFile, UploadProps } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
-import routes, { baseUrl } from '../../../routes';
+import routes, {baseUrl, clientDomain} from '../../../routes';
 
 const { Dragger } = Upload;
 
@@ -24,7 +24,7 @@ const ImageDragger = (props: Props) => {
     const defaultImage = {
       uid: defaultImageName,
       name: defaultImageName,
-      url: `${baseUrl}/${imageUrl}`,
+      url: `${clientDomain}/${imageUrl}`,
     };
 
     defaultFileList = ([defaultImage]);
