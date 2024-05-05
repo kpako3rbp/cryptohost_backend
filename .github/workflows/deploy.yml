@@ -21,8 +21,8 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: 22
           script: |
-            cd cryptohost_backend
-            git pull
-            cd client
-            npm run build
+            cd cryptohost_backend && \
+            git pull && \
+            cd client && \
+            npm run build && \
             pm2 restart all
