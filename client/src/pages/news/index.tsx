@@ -44,7 +44,7 @@ const News = (props: Props) => {
       </Head>
       <Breadcrumbs items={paths}></Breadcrumbs>
       <PageHeaderWithButton
-        title={'Новости'}
+        title={'Новости1212121212'}
         buttonText={'Создать'}
         buttonLink={'news/add'}
       />
