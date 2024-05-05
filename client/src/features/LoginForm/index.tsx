@@ -29,6 +29,9 @@ const LoginForm = () => {
     inputRef.current?.focus();
   }, []);
 
+
+  const callbackUrl = new URL(router.query.callbackUrl as string).pathname;
+
   const login = async (credentials: { login: string; password: string }) => {
     try {
       setLoading(true);
@@ -36,7 +39,7 @@ const LoginForm = () => {
         login: credentials.login.trim().toLowerCase(),
         password: credentials.password.trim(),
         redirect: true, // TODO нормально настроить редирект
-        callbackUrl: router.query.callbackUrl as string,
+        callbackUrl,
       });
 
       if (res?.error) {
