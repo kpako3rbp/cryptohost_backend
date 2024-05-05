@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Card as AntdCard, Tag, theme, Flex, Typography } from 'antd';
 import {
   DeleteOutlined,
@@ -56,6 +56,16 @@ const PostCard = (props: Props) => {
   } = theme.useToken();
   const router = useRouter();
 
+  const [publishedDate, setPublishedDate] = useState<string | null>(null);
+  const [updatedDate, setUpdatedDate] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPublishedDate(formatDateTime(publishedAt));
+    if (updatedAt) {
+      setUpdatedDate(formatDateTime(updatedAt));
+    }
+  }, []);
+
   if (isLoading) {
     const skeletonCount = 10;
     const skeletons = Array.from({ length: skeletonCount }, (_, index) => (
@@ -108,10 +118,10 @@ const PostCard = (props: Props) => {
               className={styles.entityCardTime}
               style={{ color: colorTextTertiary }}
             >
-              {formatDateTime(publishedAt)}{' '}
+              {publishedDate}{' '}
               {updatedAt && (
                 <span style={{ color: colorTextQuaternary }}>
-                  / ред. {formatDateTime(updatedAt)}
+                  / ред. {updatedDate}
                 </span>
               )}
             </time>

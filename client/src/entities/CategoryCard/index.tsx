@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Card as AntdCard, Tag, theme, Flex, Divider, Statistic } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import Link from 'next/link';
@@ -36,6 +36,16 @@ const CategoryCard = (props: Props) => {
     token: { colorTextTertiary, colorTextQuaternary, borderRadiusLG },
   } = theme.useToken();
 
+  const [createdDate, setCreatedDate] = useState<string | null>(null);
+  const [updatedDate, setUpdatedDate] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCreatedDate(formatDateTime(createdAt));
+    if (updatedAt) {
+      setUpdatedDate(formatDateTime(updatedAt));
+    }
+  }, []);
+
   if (isLoading) {
     return <CategoryCardSkeleton />;
   }
@@ -67,10 +77,10 @@ const CategoryCard = (props: Props) => {
               className={styles.categoryCardTime}
               style={{ color: colorTextTertiary }}
             >
-              {formatDateTime(createdAt)}{' '}
+              {createdDate}{' '}
               {updatedAt && (
                 <span style={{ color: colorTextQuaternary }}>
-                  / ред. {formatDateTime(updatedAt)}
+                  / ред. {updatedDate}
                 </span>
               )}
             </time>

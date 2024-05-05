@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Card as AntdCard,
   Tag,
@@ -66,6 +66,16 @@ const PromoBannerCard = (props: Props) => {
   } = theme.useToken();
   const router = useRouter();
 
+  const [createdDate, setCreatedDate] = useState<string | null>(null);
+  const [updatedDate, setUpdatedDate] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCreatedDate(formatDateTime(createdAt));
+    if (updatedAt) {
+      setUpdatedDate(formatDateTime(updatedAt));
+    }
+  }, []);
+
   if (isLoading) {
     const skeletonCount = 1;
     const skeletons = Array.from({ length: skeletonCount }, (_, index) => (
@@ -115,10 +125,10 @@ const PromoBannerCard = (props: Props) => {
               className={styles.entityCardTime}
               style={{ color: colorTextTertiary }}
             >
-              {formatDateTime(createdAt)}{' '}
+              {createdDate}{' '}
               {updatedAt && (
                 <span style={{ color: colorTextQuaternary }}>
-                  / ред. {formatDateTime(updatedAt)}
+                  / ред. {updatedDate}
                 </span>
               )}
             </time>
