@@ -30,7 +30,7 @@ const LoginForm = () => {
   }, []);
 
 
-  const callbackUrl = new URL(router.query.callbackUrl as string).pathname;
+  const callbackUrl = router.query.callbackUrl ? new URL(router.query.callbackUrl as string).pathname : '/news';
 
   const login = async (credentials: { login: string; password: string }) => {
     try {
