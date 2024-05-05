@@ -2,22 +2,17 @@ import { useRouter } from 'next/router';
 // import { AdminData, useLoginMutation } from '../../app/servises/auth';
 // import type { AdminData } from '../../app/servises/auth';
 import { useEffect, useRef, useState } from 'react';
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  InputRef,
-  Space,
-  Spin,
-  theme,
-} from 'antd';
+import { Button, Card, Form, Input, InputRef, Space, Spin, theme } from 'antd';
 import { isErrorWithMessage } from '@/shared/lib/is-error-with-message';
 import Layout from '@/shared/ui/Layout';
 import styles from '../PageHeaderWithButton/index.module.scss';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import ErrorMessage from '@/shared/ui/ErrorMessage';
 import { signIn } from 'next-auth/react';
+import { providers } from 'next-auth/core/routes';
+import { GetServerSidePropsContext } from 'next';
+import { getServerSession, Session } from 'next-auth';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -34,13 +29,14 @@ const LoginForm = () => {
     inputRef.current?.focus();
   }, []);
 
-  const login = async (credentials: {login: string, password: string}) => {
+  const login = async (credentials: { login: string; password: string }) => {
     try {
       setLoading(true);
       const res = await signIn('credentials', {
         login: credentials.login.trim().toLowerCase(),
         password: credentials.password.trim(),
-        redirect: false,
+        redirect: true, // TODO нормально настроить редирект
+        callbackUrl: router.query.callbackUrl as string,
       });
 
       if (res?.error) {
@@ -65,8 +61,8 @@ const LoginForm = () => {
 
   // Если пользователь уже аутентифицирован, перенаправляем его на главную страницу
   if (session && status === 'authenticated') {
-    router.push('/news');
-    return <></>;
+    router.push('/');
+    // return <></>;
   }
 
   return (

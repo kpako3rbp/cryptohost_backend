@@ -47,10 +47,11 @@ const Header = (props: Props) => {
       setLoading(true);
       const data = await signOut({
         redirect: false,
-        callbackUrl: '/login',
+        // callbackUrl: '/login',
       });
 
-      router.push(data.url);
+      // router.push(data.url);
+      router.push('/login');
     } catch (err) {
       message.error('Произошла ошибка при выходе из кабинета');
       console.error('Произошла ошибка при выходе из кабинета', err);
